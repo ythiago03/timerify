@@ -1,12 +1,14 @@
 import { Pause, Play, RotateCcw } from "lucide-react";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 const Timer: React.FC = () => {
   const [isRunning, setIsRunning] = useState<boolean>(false);
-  const [time, setTime] = useState<number>(5); // 25 minutes
+  const [time, setTime] = useState<number>(1500); // 25 minutes
   const [intervalId, setIntervalId] = useState<ReturnType<
     typeof setInterval
   > | null>(null);
+  const [isRest, setIsRest] = useState<boolean>(true);
 
   const startTimer = () => {
     if (!intervalId) {
@@ -28,11 +30,20 @@ const Timer: React.FC = () => {
       setIsRunning(false);
     }
   };
-
   useEffect(() => {
+    const alarmAudio = new Audio("/sounds/alarm.mp3");
+
     if (time === 0) {
-      alert("Time's up!");
+      alarmAudio.play();
+      toast("Time's up!");
       pauseTimer();
+      if (isRest) {
+        setTime(300); //5 minutes
+        setIsRest(false);
+      } else {
+        setTime(1500); //25 minutes
+        setIsRest(true);
+      }
     }
   }, [time]);
 
