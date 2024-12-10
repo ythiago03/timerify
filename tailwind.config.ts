@@ -56,6 +56,10 @@ export default {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      backgroundImage: {
+        theme1: "url('/assets/Theme 1.png')",
+        theme2: "url('/assets/image 1.png')",
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],

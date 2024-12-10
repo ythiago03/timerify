@@ -1,6 +1,15 @@
 "use client";
 
 import Timer from "@/components/Timer";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { Slider } from "@/components/ui/slider";
 import {
   CloudHail,
@@ -13,14 +22,28 @@ import {
   VolumeX,
 } from "lucide-react";
 import { useTheme } from "next-themes";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   const [mainVolume, setMainVolume] = useState(50);
-  const { theme, setTheme } = useTheme();
+  const [background, setBackground] = useState<string>("");
+
+  const toggleTheme = (theme: string, background?: string) => {
+    console.log(theme);
+
+    const htmlElement = document.documentElement;
+    htmlElement.classList.forEach((className) => {
+      htmlElement.classList.remove(className);
+    });
+    htmlElement.classList.add(theme);
+    setBackground(background ? background : "");
+  };
 
   return (
-    <div className="w-full min-h-screen flex flex-col ">
+    <div
+      style={{ backgroundImage: `${background}` }}
+      className={`bg-${background} w-full min-h-screen flex flex-col  bg-cover bg-center bg-no-repeat`}
+    >
       <header className="w-full flex justify-center p-3">
         <div className="flex w-1/2 justify-between items-center ">
           <h1 className="text-3xl font-bold">Timerify</h1>
@@ -38,7 +61,81 @@ export default function Home() {
               {mainVolume > 0 && mainVolume > 50 && <Volume2 />}
             </li>
             <li>
-              <Palette />
+              <Sheet>
+                <SheetTrigger>
+                  <Palette />
+                </SheetTrigger>
+                <SheetContent>
+                  <SheetHeader>
+                    <SheetTitle>Choose your theme</SheetTitle>
+                    <ScrollArea className="h-screen p-4 w-[350px]">
+                      <div
+                        className="flex
+                    flex-col gap-4"
+                      >
+                        <button onClick={() => toggleTheme("dark")}>
+                          <span className="font-bold">Dark</span>
+                          <img
+                            className="rounded-lg"
+                            src="/assets/default.png"
+                            alt=""
+                          />
+                        </button>
+
+                        <button onClick={() => toggleTheme("light")}>
+                          <span className="font-bold">Light</span>
+                          <img
+                            className="rounded-lg"
+                            src="/assets/light-theme.png"
+                            alt=""
+                          />
+                        </button>
+                        <button
+                          onClick={() =>
+                            toggleTheme("theme2", "url('/assets/teste2.gif')")
+                          }
+                        >
+                          <span className="font-bold">Forest</span>
+                          <img
+                            className="rounded-lg"
+                            src="/assets/Theme 2.png"
+                            alt=""
+                          />
+                        </button>
+                        <button
+                          onClick={() =>
+                            toggleTheme("dark", "url('/assets/teste.gif")
+                          }
+                        >
+                          <span className="font-bold">Lofi</span>
+                          <img
+                            className="rounded-lg"
+                            src="/assets/Theme 1.png"
+                            alt=""
+                          />
+                        </button>
+
+                        <button onClick={() => toggleTheme("dark")}>
+                          <span className="font-bold">Default</span>
+                          <img
+                            className="rounded-lg"
+                            src="/assets/Theme 1.png"
+                            alt=""
+                          />
+                        </button>
+                        <button onClick={() => toggleTheme("dark")}>
+                          <span className="font-bold">Default</span>
+                          <img
+                            className="rounded-lg"
+                            src="/assets/Theme 2.png"
+                            alt=""
+                          />
+                        </button>
+                      </div>
+                    </ScrollArea>
+                  </SheetHeader>
+                </SheetContent>
+              </Sheet>
             </li>
             <li>
               <Settings />
