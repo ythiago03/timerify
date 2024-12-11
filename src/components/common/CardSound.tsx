@@ -1,5 +1,6 @@
 import { ElementType, useEffect, useRef, useState } from "react";
 import { Slider } from "../ui/slider";
+import { useGlobalAudio } from "@/context/GlobalAudioContext";
 
 interface CardSoundProps {
   icon: ElementType;
@@ -10,6 +11,7 @@ const CardSound: React.FC<CardSoundProps> = ({ icon: Icon, soundName }) => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const soundRef = useRef<HTMLAudioElement | null>(null);
   const [soundVolume, setSoundVolume] = useState<number>(0.5);
+  const { addAudio } = useGlobalAudio();
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -17,6 +19,7 @@ const CardSound: React.FC<CardSoundProps> = ({ icon: Icon, soundName }) => {
       soundRef.current = new Audio(path);
       soundRef.current.volume = soundVolume;
       soundRef.current.loop = true;
+      addAudio(soundRef);
     }
 
     return () => {
