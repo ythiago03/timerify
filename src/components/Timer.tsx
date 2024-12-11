@@ -11,6 +11,8 @@ const Timer: React.FC = () => {
   const [isRest, setIsRest] = useState<boolean>(true);
 
   const startTimer = () => {
+    const btnClickAudio = new Audio("/sounds/button-click.mp3");
+    btnClickAudio.play();
     if (!intervalId) {
       if (time === 0) {
         setTime(1500);
@@ -24,6 +26,8 @@ const Timer: React.FC = () => {
   };
 
   const pauseTimer = () => {
+    const btnClickAudio = new Audio("/sounds/button-click.mp3");
+    btnClickAudio.play();
     if (intervalId) {
       clearInterval(intervalId);
       setIntervalId(null);
