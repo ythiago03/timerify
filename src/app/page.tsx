@@ -1,11 +1,11 @@
 "use client";
 
+import CardTheme from "@/components/common/CardTheme";
 import Timer from "@/components/Timer";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -21,8 +21,7 @@ import {
   Volume2,
   VolumeX,
 } from "lucide-react";
-import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function Home() {
   const [mainVolume, setMainVolume] = useState(50);
@@ -73,64 +72,36 @@ export default function Home() {
                         className="flex
                     flex-col gap-4"
                       >
-                        <button onClick={() => toggleTheme("dark")}>
-                          <span className="font-bold">Dark</span>
-                          <img
-                            className="rounded-lg"
-                            src="/assets/default.png"
-                            alt=""
-                          />
-                        </button>
-
-                        <button onClick={() => toggleTheme("light")}>
-                          <span className="font-bold">Light</span>
-                          <img
-                            className="rounded-lg"
-                            src="/assets/light-theme.png"
-                            alt=""
-                          />
-                        </button>
-                        <button
-                          onClick={() =>
-                            toggleTheme("theme2", "url('/assets/teste2.gif')")
+                        <CardTheme
+                          title="Dark"
+                          image="/assets/theme-dark.png"
+                          toggleTheme={() => toggleTheme("dark")}
+                        />
+                        <CardTheme
+                          title="Light"
+                          image="/assets/theme-light.png"
+                          toggleTheme={() => toggleTheme("light")}
+                        />
+                        <CardTheme
+                          title="Forest"
+                          image="/assets/theme-forest.png"
+                          toggleTheme={() =>
+                            toggleTheme(
+                              "theme2",
+                              "url('/assets/background-forest.gif')"
+                            )
                           }
-                        >
-                          <span className="font-bold">Forest</span>
-                          <img
-                            className="rounded-lg"
-                            src="/assets/Theme 2.png"
-                            alt=""
-                          />
-                        </button>
-                        <button
-                          onClick={() =>
-                            toggleTheme("dark", "url('/assets/teste.gif")
+                        />
+                        <CardTheme
+                          title="Lofi"
+                          image="/assets/theme-study.png"
+                          toggleTheme={() =>
+                            toggleTheme(
+                              "dark",
+                              "url('/assets/background-study.gif"
+                            )
                           }
-                        >
-                          <span className="font-bold">Lofi</span>
-                          <img
-                            className="rounded-lg"
-                            src="/assets/Theme 1.png"
-                            alt=""
-                          />
-                        </button>
-
-                        <button onClick={() => toggleTheme("dark")}>
-                          <span className="font-bold">Default</span>
-                          <img
-                            className="rounded-lg"
-                            src="/assets/Theme 1.png"
-                            alt=""
-                          />
-                        </button>
-                        <button onClick={() => toggleTheme("dark")}>
-                          <span className="font-bold">Default</span>
-                          <img
-                            className="rounded-lg"
-                            src="/assets/Theme 2.png"
-                            alt=""
-                          />
-                        </button>
+                        />
                       </div>
                     </ScrollArea>
                   </SheetHeader>
