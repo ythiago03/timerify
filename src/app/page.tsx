@@ -3,6 +3,7 @@
 import CardSound from "@/components/common/CardSound";
 import CardTheme from "@/components/common/CardTheme";
 import GlobalSoundControl from "@/components/common/GlobalSoundControl";
+import Themes from "@/components/layout/Themes";
 import Timer from "@/components/Timer";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
@@ -59,43 +60,7 @@ export default function Home() {
                   <SheetContent>
                     <SheetHeader>
                       <SheetTitle>Choose your theme</SheetTitle>
-                      <ScrollArea className="h-screen p-4 w-[350px]">
-                        <div
-                          className="flex
-                    flex-col gap-4"
-                        >
-                          <CardTheme
-                            title="Dark"
-                            image="/assets/theme-dark.png"
-                            toggleTheme={() => toggleTheme("dark")}
-                          />
-                          <CardTheme
-                            title="Light"
-                            image="/assets/theme-light.png"
-                            toggleTheme={() => toggleTheme("light")}
-                          />
-                          <CardTheme
-                            title="Forest"
-                            image="/assets/theme-forest.png"
-                            toggleTheme={() =>
-                              toggleTheme(
-                                "theme2",
-                                "url('/assets/background-forest.gif')"
-                              )
-                            }
-                          />
-                          <CardTheme
-                            title="Lofi"
-                            image="/assets/theme-study.png"
-                            toggleTheme={() =>
-                              toggleTheme(
-                                "dark",
-                                "url('/assets/background-study.gif"
-                              )
-                            }
-                          />
-                        </div>
-                      </ScrollArea>
+                      <Themes toggleTheme={toggleTheme} />
                     </SheetHeader>
                   </SheetContent>
                 </Sheet>
