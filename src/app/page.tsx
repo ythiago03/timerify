@@ -1,5 +1,6 @@
 "use client";
 
+import CardSound from "@/components/common/CardSound";
 import CardTheme from "@/components/common/CardTheme";
 import Timer from "@/components/Timer";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -13,9 +14,13 @@ import {
 import { Slider } from "@/components/ui/slider";
 import {
   CloudHail,
+  Coffee,
+  FlameKindling,
+  Mountain,
   Palette,
   Settings,
   TentTree,
+  TrainFront,
   TreePalm,
   Volume1,
   Volume2,
@@ -120,33 +125,13 @@ export default function Home() {
         <div className="flex flex-col items-center w-1/3 ">
           <h2 className="text-2xl font-bold mt-5">Sounds</h2>
           <div className="flex p-5 flex-wrap gap-5">
-            <div className="relative hover:bg-gray-50  w-32 h-32 flex flex-col justify-center items-center cursor-pointer rounded-lg">
-              <TentTree className="w-16 h-16" />
-              <Slider
-                defaultValue={[50]}
-                max={100}
-                step={1}
-                className="w-full mt-auto absolute bottom-0"
-              />
-            </div>
-            <div className="relative hover:bg-gray-50  w-32 h-32 flex flex-col justify-center items-center cursor-pointer rounded-lg">
-              <TreePalm className="w-16 h-16" />
-              <Slider
-                defaultValue={[50]}
-                max={100}
-                step={1}
-                className="w-full mt-auto absolute bottom-0"
-              />
-            </div>
-            <div className="relative hover:bg-gray-50  w-32 h-32 flex flex-col justify-center items-center cursor-pointer rounded-lg">
-              <CloudHail className="w-16 h-16" />
-              <Slider
-                defaultValue={[50]}
-                max={100}
-                step={1}
-                className="w-full mt-auto absolute bottom-0"
-              />
-            </div>
+            <CardSound soundName="night" icon={TentTree} />
+            <CardSound soundName="campfire" icon={FlameKindling} />
+            <CardSound soundName="beach" icon={TreePalm} />
+            <CardSound soundName="rain" icon={CloudHail} />
+            <CardSound soundName="coffee" icon={Coffee} />
+            <CardSound soundName="cave" icon={Mountain} />
+            <CardSound soundName="train" icon={TrainFront} />
           </div>
         </div>
       </main>
