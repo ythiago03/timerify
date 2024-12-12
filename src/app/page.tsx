@@ -1,11 +1,11 @@
 "use client";
 
-import CardSound from "@/components/common/CardSound";
-import CardTheme from "@/components/common/CardTheme";
 import GlobalSoundControl from "@/components/common/GlobalSoundControl";
-import Themes from "@/components/layout/Themes";
+import SoundCards from "@/components/template/SoundCards";
+import Tasks from "@/components/template/Tasks";
+import Themes from "@/components/template/Themes";
 import Timer from "@/components/Timer";
-import { ScrollArea } from "@/components/ui/scroll-area";
+
 import {
   Sheet,
   SheetContent,
@@ -14,17 +14,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { GlobalAudioProvider } from "@/context/GlobalAudioContext";
-import {
-  CloudHail,
-  Coffee,
-  FlameKindling,
-  Mountain,
-  Palette,
-  Settings,
-  TentTree,
-  TrainFront,
-  TreePalm,
-} from "lucide-react";
+import { Palette, Settings } from "lucide-react";
 import { useState } from "react";
 
 export default function Home() {
@@ -72,20 +62,15 @@ export default function Home() {
           </div>
         </header>
         <main className="grow flex ">
-          <div className="w-1/3 ">taks</div>
+          <section className="flex flex-col items-center w-1/3 ">
+            <h2 className="text-2xl font-bold mt-5">Tasks</h2>
+            <Tasks />
+          </section>
           <Timer />
-          <div className="flex flex-col items-center w-1/3 ">
+          <section className="flex flex-col items-center w-1/3 ">
             <h2 className="text-2xl font-bold mt-5">Sounds</h2>
-            <div className="flex p-5 flex-wrap gap-5">
-              <CardSound soundName="night" icon={TentTree} />
-              <CardSound soundName="campfire" icon={FlameKindling} />
-              <CardSound soundName="beach" icon={TreePalm} />
-              <CardSound soundName="rain" icon={CloudHail} />
-              <CardSound soundName="coffee" icon={Coffee} />
-              <CardSound soundName="cave" icon={Mountain} />
-              <CardSound soundName="train" icon={TrainFront} />
-            </div>
-          </div>
+            <SoundCards />
+          </section>
         </main>
         <footer className="w-full p-3 ">Copyright</footer>
       </div>
