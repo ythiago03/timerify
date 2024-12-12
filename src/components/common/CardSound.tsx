@@ -51,13 +51,13 @@ const CardSound: React.FC<CardSoundProps> = ({ icon: Icon, soundName }) => {
     sound.volume = soundVolume;
   };
 
-  const conditionalStyle = isPlaying ? "bg-foreground/30 backdrop-blur-sm" : "";
+  const conditionalStyle = isPlaying ? "bg-foreground/15 backdrop-blur-sm" : "";
 
   return (
     <div className="relative">
       <button
         onClick={toggleSound}
-        className={`${conditionalStyle} hover:bg-foreground/30  hover:backdrop-blur-sm  w-32 h-32 flex flex-col justify-center items-center cursor-pointer rounded-lg`}
+        className={`${conditionalStyle} hover:bg-foreground/15  hover:backdrop-blur-sm  w-32 h-32 flex flex-col justify-center items-center cursor-pointer rounded-lg`}
       >
         <Icon className="w-16 h-16" />
       </button>
