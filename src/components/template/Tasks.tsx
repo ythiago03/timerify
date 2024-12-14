@@ -31,7 +31,7 @@ const Tasks: React.FC = () => {
     setTaskList((prevTaskList) => [
       ...prevTaskList,
       {
-        id: String(prevTaskList.length + 1),
+        id: crypto.randomUUID(),
         task,
         status: "incomplete",
       },
