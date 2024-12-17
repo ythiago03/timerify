@@ -11,21 +11,33 @@ interface TaskInterface {
 
 const Tasks: React.FC = () => {
   const [task, setTask] = useState<string>("");
-
+  const [isTaskSubmited, setIsTaskSubmited] = useState<boolean>(false);
+  const [taskError, setTaskError] = useState<string>("");
   const [taskList, setTaskList] = useState<TaskInterface[]>([]);
 
   const completedStyle = "text-foreground/30 line-through";
 
   const addTask = (): void => {
+    if (task.length < 3) {
+      setTaskError("Task must be at least 3 characters long");
+      setIsTaskSubmited(true);
+      return;
+    }
+    if (taskList.length >= 10) {
+      setTaskError("You can't add more than 10 tasks");
+      setIsTaskSubmited(true);
+      return;
+    }
     setTaskList((prevTaskList) => [
       ...prevTaskList,
       {
-        id: String(prevTaskList.length + 1),
+        id: crypto.randomUUID(),
         task,
         status: "incomplete",
       },
     ]);
     setTask("");
+    setIsTaskSubmited(false);
   };
 
   const handleRemoveTask = (id: string): void => {
@@ -55,8 +67,8 @@ const Tasks: React.FC = () => {
           value={task}
           onChange={(e) => setTask(e.target.value)}
           className="bg-transparent border-0 py-6 focus-visible:ring-0"
-          type="email"
-          id="email"
+          type="text"
+          id="text"
           placeholder="Do homework..."
         />
         <Button
@@ -66,6 +78,9 @@ const Tasks: React.FC = () => {
           <CirclePlus className="text-green-500" />
         </Button>
       </form>
+      {isTaskSubmited && (
+        <span className="text-xs text-destructive p-3">{taskError}</span>
+      )}
 
       <div className="pt-10 w-full max-w-sm">
         {taskList.map(({ id, task, status }) => (

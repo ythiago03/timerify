@@ -1,5 +1,6 @@
 import CardSound from "../common/CardSound";
 import {
+  Bird,
   CloudHail,
   Coffee,
   FlameKindling,
@@ -7,6 +8,7 @@ import {
   TentTree,
   TrainFront,
   TreePalm,
+  Waves,
 } from "lucide-react";
 
 const SoundCards: React.FC = () => {
@@ -19,6 +21,8 @@ const SoundCards: React.FC = () => {
       <CardSound soundName="coffee" icon={Coffee} />
       <CardSound soundName="cave" icon={Mountain} />
       <CardSound soundName="train" icon={TrainFront} />
+      <CardSound soundName="birds" icon={Bird} />
+      <CardSound soundName="river" icon={Waves} />
     </div>
   );
 };
