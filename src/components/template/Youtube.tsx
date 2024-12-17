@@ -9,7 +9,15 @@ import {
   PopoverTrigger,
 } from "../ui/popover";
 import { useEffect, useRef, useState } from "react";
-import { list } from "postcss";
+import { Slider } from "../ui/slider";
+import { toast } from "sonner";
+
+declare global {
+  interface Window {
+    onYouTubeIframeAPIReady: () => void;
+    YT: any;
+  }
+}
 
 const Youtube: React.FC = () => {
   const playerRef = useRef<any>(null);
@@ -48,22 +56,30 @@ const Youtube: React.FC = () => {
   };
 
   const addVideo = async () => {
-    const url = new URL(videoUrl);
-    const playlistId = url.searchParams.get("list");
-    const videoId = url.searchParams.get("v");
+    try {
+      const url = new URL(videoUrl);
+      const playlistId = url.searchParams.get("list");
+      const videoId = url.searchParams.get("v");
 
-    if (playlistId) {
-      await player.loadPlaylist({
-        listType: "playlist",
-        list: playlistId,
+      if (!videoId && !playlistId) throw new Error("Invalid URL");
+
+      if (playlistId) {
+        await player.loadPlaylist({
+          listType: "playlist",
+          list: playlistId,
+        });
+      } else {
+        await player.loadVideoById(videoId);
+      }
+      player.setVolume(50);
+      setIsPlaying(true);
+      updateVideo(player);
+    } catch (error) {
+      console.error("Error adding video:", error);
+      toast.error("Error on adding video", {
+        description: "Please insert a valid link to a youtube video",
       });
-    } else {
-      await player.loadVideoById(videoId);
     }
-    setIsPlaying(true);
-    console.log(player);
-
-    updateVideo(player);
   };
 
   const handlePlay = () => {
@@ -78,22 +94,28 @@ const Youtube: React.FC = () => {
 
   const nexVideo = async () => {
     await player.nextVideo();
+    player.setVolume(50);
     updateVideo(player);
   };
 
   const previousVideo = async () => {
     await player.previousVideo();
+    player.setVolume(50);
     updateVideo(player);
   };
 
   const updateVideo = (player: any) => {
     const updatedVideo = player.getVideoData();
-    setVideoTitle(updatedVideo.title);
+    setVideoTitle(updatedVideo?.title);
+  };
+
+  const handleYoutubeVolume = (volume: number) => {
+    player.setVolume(volume);
   };
 
   return (
     <div className="flex items-center p-3 gap-3 h-20 w-1/4 rounded-lg border border-foreground">
-      <div id="youtube-player"></div>
+      <div className="hidden" id="youtube-player"></div>
       <Popover>
         <PopoverTrigger asChild>
           <button>
@@ -139,17 +161,31 @@ const Youtube: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="flex ml-auto">
-        <button onClick={previousVideo}>
-          <SkipBack />
-        </button>
-        <button onClick={handlePlay}>{isPlaying ? <Pause /> : <Play />}</button>
-        <button onClick={nexVideo}>
-          <SkipForward />
-        </button>
+      <div className="flex flex-col gap-4">
+        <div className="flex ml-auto">
+          <button onClick={previousVideo}>
+            <SkipBack />
+          </button>
+          <button onClick={handlePlay}>
+            {isPlaying ? <Pause /> : <Play />}
+          </button>
+          <button onClick={nexVideo}>
+            <SkipForward />
+          </button>
+        </div>
+        <Slider
+          onValueChange={(e) => handleYoutubeVolume(e[0])}
+          defaultValue={[50]}
+          max={100}
+          step={1}
+          className="w-full mt-auto cursor-pointer"
+        />
       </div>
     </div>
   );
 };
 
 export default Youtube;
+function useToast(): { toast: any } {
+  throw new Error("Function not implemented.");
+}
