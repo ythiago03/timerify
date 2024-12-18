@@ -26,6 +26,7 @@ import {
 import { useState } from "react";
 import Link from "next/link";
 import Youtube from "@/components/template/Youtube";
+import Header from "@/components/template/Header";
 
 export default function Home() {
   const [showTasks, setShowTasks] = useState<"visible" | "invisible">(
@@ -36,7 +37,7 @@ export default function Home() {
   );
   const [background, setBackground] = useState<string>("");
 
-  const toggleTheme = (theme: string, background?: string) => {
+  const toggleTheme = (theme: string, background?: string): void => {
     const htmlElement = document.documentElement;
     htmlElement.classList.forEach((className) => {
       htmlElement.classList.remove(className);
@@ -51,32 +52,7 @@ export default function Home() {
         style={{ backgroundImage: `${background}` }}
         className={`bg-${background} w-full min-h-screen flex flex-col  bg-cover bg-center bg-no-repeat`}
       >
-        <header className="w-full flex justify-center p-3">
-          <div className="flex w-1/2 justify-between items-center ">
-            <h1 className="text-3xl font-bold">Timerify</h1>
-            <ul className="flex gap-3">
-              <li className="flex gap-5">
-                <GlobalSoundControl />
-              </li>
-              <li>
-                <Sheet>
-                  <SheetTrigger>
-                    <Palette />
-                  </SheetTrigger>
-                  <SheetContent>
-                    <SheetHeader>
-                      <SheetTitle>Choose your theme</SheetTitle>
-                      <Themes toggleTheme={toggleTheme} />
-                    </SheetHeader>
-                  </SheetContent>
-                </Sheet>
-              </li>
-              <li>
-                <Settings />
-              </li>
-            </ul>
-          </div>
-        </header>
+        <Header toggleTheme={toggleTheme} />
         <main className="grow flex ">
           <section className={`${showTasks} flex flex-col items-center w-1/3 `}>
             <h2 className="text-2xl font-bold mt-5">Tasks</h2>
