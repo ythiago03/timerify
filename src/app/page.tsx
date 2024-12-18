@@ -1,28 +1,12 @@
 "use client";
 
-import GlobalSoundControl from "@/components/common/GlobalSoundControl";
 import SoundCards from "@/components/template/SoundCards";
 import Tasks from "@/components/template/Tasks";
-import Themes from "@/components/template/Themes";
 import Timer from "@/components/Timer";
 import GithubIcon from "/assets/github.svg";
 
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
 import { GlobalAudioProvider } from "@/context/GlobalAudioContext";
-import {
-  Award,
-  BookAudio,
-  ClipboardList,
-  Github,
-  Palette,
-  Settings,
-} from "lucide-react";
+import { Award, BookAudio, ClipboardList, Github } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
 import Youtube from "@/components/template/Youtube";
@@ -53,6 +37,7 @@ export default function Home() {
         className={`bg-${background} w-full min-h-screen flex flex-col  bg-cover bg-center bg-no-repeat`}
       >
         <Header toggleTheme={toggleTheme} />
+
         <main className="grow flex ">
           <section className={`${showTasks} flex flex-col items-center w-1/3 `}>
             <h2 className="text-2xl font-bold mt-5">Tasks</h2>
@@ -64,6 +49,7 @@ export default function Home() {
             <SoundCards />
           </section>
         </main>
+
         <footer className="w-full p-3 flex flex-col justify-center gap-3 ">
           <section className="gap-3 mb-6 flex justify-center">
             <button
@@ -76,7 +62,9 @@ export default function Home() {
             >
               <ClipboardList className="h-16 w-16" />
             </button>
+
             <Youtube />
+
             <button
               onClick={() =>
                 setShowSounds((prev) =>
