@@ -39,12 +39,16 @@ export default function Home() {
         <Header toggleTheme={toggleTheme} />
 
         <main className="grow flex ">
-          <section className={`${showTasks} flex flex-col items-center w-1/3 `}>
+          <section
+            className={`${showTasks} lg:absolute xl:relative  lg:inset-y-1/2	lg:inset-x-1/4  flex flex-col items-center lg:justify-center  xl:w-1/3`}
+          >
             <h2 className="text-2xl font-bold mt-5">Tasks</h2>
             <Tasks />
           </section>
           <Timer />
-          <section className={`${showSound} flex flex-col items-center w-1/3 `}>
+          <section
+            className={`${showSound}  lg:absolute xl:relative  lg:inset-y-1/2	lg:inset-x-1/4  flex flex-col items-center lg:justify-center  xl:w-1/3`}
+          >
             <h2 className="text-2xl font-bold mt-5">Sounds</h2>
             <SoundCards />
           </section>
