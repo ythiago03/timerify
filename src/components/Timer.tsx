@@ -68,18 +68,18 @@ const Timer: React.FC = () => {
   return (
     <div className="flex items-center gap-4 m-auto">
       <button onClick={resetTimer}>
-        <RotateCcw className="h-12 w-12 md:h-16 md:w-16  lg:h-20 lg:w-20" />
+        <RotateCcw className="h-12 w-12 md:h-16 md:w-16  xl:h-20 xl:w-20" />
       </button>
-      <span className="text-5xl md:text-7xl lg:text-9xl font-bold">
+      <span className="text-5xl md:text-7xl xl:text-9xl font-bold">
         {formatTime(time)}
       </span>
       {isRunning ? (
         <button onClick={pauseTimer}>
-          <Pause className="h-12 w-12 md:h-16 md:w-16  lg:h-20 lg:w-20" />
+          <Pause className="h-12 w-12 md:h-16 md:w-16  xl:h-20 xl:w-20" />
         </button>
       ) : (
         <button onClick={startTimer}>
-          <Play className="h-12 w-12 md:h-16 md:w-16  lg:h-20 lg:w-20" />
+          <Play className="h-12 w-12 md:h-16 md:w-16  xl:h-20 xl:w-20" />
         </button>
       )}
     </div>
