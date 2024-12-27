@@ -23,7 +23,7 @@ const GlobalSoundControl: React.FC = () => {
 				defaultValue={[50]}
 				max={100}
 				step={1}
-				className="w-24"
+				className="w-20 lg:w-24"
 			/>
 			{globalVolume * 100 === 0 && <VolumeX />}
 			{globalVolume * 100 > 0 && globalVolume * 100 <= 50 && <Volume1 />}

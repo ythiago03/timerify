@@ -16,7 +16,7 @@ interface HeaderProps {
 const Header = ({ toggleTheme }: HeaderProps) => {
 	return (
 		<header className="w-full flex justify-center p-3">
-			<div className="flex w-1/2 justify-between items-center ">
+			<div className="flex w-full px-1 lg:px-0 lg:w-1/2 justify-between items-center ">
 				<h1 className="text-3xl font-bold">Timerify</h1>
 				<ul className="flex gap-3">
 					<li className="flex gap-5">
