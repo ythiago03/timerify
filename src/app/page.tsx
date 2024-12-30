@@ -20,7 +20,9 @@ export default function Home() {
 		"invisible",
 	);
 	const [background, setBackground] = useState<string>("");
-	const [width, setWidth] = useState<number>(window.innerWidth);
+	const [width, setWidth] = useState<number | undefined>(
+		typeof window !== "undefined" ? window.innerWidth : undefined,
+	);
 
 	const toggleTheme = (theme: string, background?: string): void => {
 		const htmlElement = document.documentElement;
@@ -32,6 +34,8 @@ export default function Home() {
 	};
 
 	useEffect(() => {
+		if (typeof window === "undefined") return;
+
 		const handleResize = () => setWidth(window.innerWidth);
 
 		window.addEventListener("resize", handleResize);
@@ -65,7 +69,7 @@ export default function Home() {
 
 				<footer className="w-full p-3 flex flex-col justify-center gap-3 ">
 					<section className="gap-3 mb-6 flex flex-col lg:flex-row items-center lg:items-start justify-normal lg:justify-center">
-						{width < 1024 && (
+						{width && width < 1024 && (
 							<div className="flex justify-between w-1/2">
 								<button
 									type="button"
@@ -92,7 +96,7 @@ export default function Home() {
 							</div>
 						)}
 
-						{width >= 1024 && (
+						{width && width >= 1024 && (
 							<button
 								type="button"
 								onClick={() =>
@@ -108,7 +112,7 @@ export default function Home() {
 
 						<Youtube className="order-3 lg:order-none" />
 
-						{width >= 1024 && (
+						{width && width >= 1024 && (
 							<button
 								type="button"
 								onClick={() =>
