@@ -19,7 +19,7 @@ declare global {
 	}
 }
 
-const Youtube: React.FC = () => {
+const Youtube: React.FC<{ className?: string }> = ({ className = "" }) => {
 	const playerRef = useRef<any>(null);
 	const [videoUrl, setVideoUrl] = useState<string>("");
 	const [player, setPlayer] = useState<any>(null);
@@ -47,9 +47,6 @@ const Youtube: React.FC = () => {
 	};
 
 	const onPlayerReady = (event: any) => {
-		console.log(event.target);
-		console.log(typeof event.target);
-
 		setPlayer(event.target);
 		event.target.addEventListener("onStateChange", (stateEvent: any) => {
 			if (stateEvent.data === window.YT.PlayerState.PLAYING) {
@@ -117,7 +114,9 @@ const Youtube: React.FC = () => {
 	};
 
 	return (
-		<div className="flex items-center p-3 gap-3 h-20 w-1/4 rounded-lg border border-foreground">
+		<div
+			className={`${className} flex items-center p-3 gap-3 h-20 w-full md:w-1/2 lg:w-1/3 xl:w-1/4 mx-4 md:mx-0 rounded-lg border border-foreground`}
+		>
 			<div className="hidden" id="youtube-player" />
 			<Popover>
 				<PopoverTrigger asChild>
