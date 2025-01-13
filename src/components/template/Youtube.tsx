@@ -15,22 +15,26 @@ import { toast } from "sonner";
 declare global {
 	interface Window {
 		onYouTubeIframeAPIReady: () => void;
-		YT: any;
+		YT: typeof YT;
 	}
 }
 
+type ExtedendedYTPlayer = YT.Player & {
+	getVideoData?: () => { title: string; video_id: string; author: string };
+};
+
 const Youtube: React.FC<{ className?: string }> = ({ className = "" }) => {
-	const playerRef = useRef<any>(null);
+	const playerRef = useRef<YT.Player | null>(null);
 	const [videoUrl, setVideoUrl] = useState<string>("");
-	const [player, setPlayer] = useState<any>(null);
+	const [player, setPlayer] = useState<YT.Player | null>(null);
 	const [isPlaying, setIsPlaying] = useState<boolean>(false);
 	const [videoTitle, setVideoTitle] = useState<string>("");
 
-	useEffect(() => {
+	useEffect((): void => {
 		loadYouTubeAPI();
 	}, []);
 
-	const loadYouTubeAPI = () => {
+	const loadYouTubeAPI = (): void => {
 		const script = document.createElement("script");
 		script.src = "https://www.youtube.com/iframe_api";
 		document.body.appendChild(script);
@@ -46,34 +50,42 @@ const Youtube: React.FC<{ className?: string }> = ({ className = "" }) => {
 		};
 	};
 
-	const onPlayerReady = (event: any) => {
+	const onPlayerReady = (event: YT.PlayerEvent): void => {
 		setPlayer(event.target);
-		event.target.addEventListener("onStateChange", (stateEvent: any) => {
-			if (stateEvent.data === window.YT.PlayerState.PLAYING) {
-				updateVideo(event.target);
-			}
-		});
+		event.target.addEventListener(
+			"onStateChange",
+			(stateEvent: YT.OnStateChangeEvent) => {
+				if (stateEvent.data === window.YT.PlayerState.PLAYING) {
+					updateVideo(event.target);
+				}
+			},
+		);
 	};
 
-	const addVideo = async () => {
+	const addVideo = (): void => {
 		try {
+			if (!player) return;
 			const url = new URL(videoUrl);
 			const playlistId = url.searchParams.get("list");
 			const videoId = url.searchParams.get("v");
 
-			if (!videoId && !playlistId) throw new Error("Invalid URL");
+			console.log(url);
+
+			if ((!videoId && !playlistId) || url.origin === "")
+				throw new Error("Invalid URL");
 
 			if (playlistId) {
-				await player.loadPlaylist({
+				player.loadPlaylist({
 					listType: "playlist",
 					list: playlistId,
 				});
-			} else {
-				await player.loadVideoById(videoId);
+			} else if (videoId) {
+				player.loadVideoById(videoId);
 			}
 			player.setVolume(50);
 			setIsPlaying(true);
 			updateVideo(player);
+			setVideoUrl("");
 		} catch (error) {
 			console.error("Error adding video:", error);
 			toast.error("Error on adding video", {
@@ -82,35 +94,38 @@ const Youtube: React.FC<{ className?: string }> = ({ className = "" }) => {
 		}
 	};
 
-	const handlePlay = () => {
+	const handlePlay = (): void => {
 		if (isPlaying) {
-			player.pauseVideo();
+			player?.pauseVideo();
 			setIsPlaying(false);
 			return;
 		}
-		player.playVideo();
+		player?.playVideo();
 		setIsPlaying(true);
 	};
 
-	const nexVideo = async () => {
-		await player.nextVideo();
-		player.setVolume(50);
+	const nexVideo = (): void => {
+		if (!player) return;
+		player?.nextVideo();
+		player?.setVolume(50);
 		updateVideo(player);
 	};
 
-	const previousVideo = async () => {
-		await player.previousVideo();
-		player.setVolume(50);
+	const previousVideo = (): void => {
+		if (!player) return;
+
+		player?.previousVideo();
+		player?.setVolume(50);
 		updateVideo(player);
 	};
 
-	const updateVideo = (player: any) => {
-		const updatedVideo = player.getVideoData();
-		setVideoTitle(updatedVideo?.title);
+	const updateVideo = (player: ExtedendedYTPlayer): void => {
+		const updatedVideo = player.getVideoData?.();
+		setVideoTitle(updatedVideo?.title ?? "");
 	};
 
 	const handleYoutubeVolume = (volume: number) => {
-		player.setVolume(volume);
+		player?.setVolume(volume);
 	};
 
 	return (
