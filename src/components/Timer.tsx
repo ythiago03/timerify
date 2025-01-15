@@ -2,9 +2,9 @@ import { Pause, Play, RotateCcw } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-const Timer: React.FC = () => {
+const Timer: React.FC<{ defaultTimer: number }> = ({ defaultTimer }) => {
 	const [isRunning, setIsRunning] = useState<boolean>(false);
-	const [time, setTime] = useState<number>(1500); // 25 minutes
+	const [time, setTime] = useState<number>(defaultTimer);
 	const [intervalId, setIntervalId] = useState<ReturnType<
 		typeof setInterval
 	> | null>(null);
@@ -15,7 +15,7 @@ const Timer: React.FC = () => {
 		btnClickAudio.play();
 		if (!intervalId) {
 			if (time === 0) {
-				setTime(1500);
+				setTime(defaultTimer);
 			}
 			const id = setInterval(() => {
 				setTime((prevTime) => prevTime - 1);
@@ -34,6 +34,7 @@ const Timer: React.FC = () => {
 			setIsRunning(false);
 		}
 	};
+
 	useEffect(() => {
 		const alarmAudio = new Audio("/sounds/alarm.mp3");
 
@@ -45,15 +46,19 @@ const Timer: React.FC = () => {
 				setTime(300); //5 minutes
 				setIsRest(false);
 			} else {
-				setTime(1500); //25 minutes
+				setTime(defaultTimer);
 				setIsRest(true);
 			}
 		}
 	}, [time]);
 
+	useEffect(() => {
+		resetTimer();
+	}, [defaultTimer]);
+
 	const resetTimer = () => {
 		pauseTimer();
-		setTime(1500);
+		setTime(defaultTimer);
 	};
 
 	const formatTime = (time: number) => {
