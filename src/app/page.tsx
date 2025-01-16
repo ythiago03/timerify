@@ -27,9 +27,10 @@ export default function Home() {
 
 	const toggleTheme = (theme: string, background?: string): void => {
 		const htmlElement = document.documentElement;
-		for (const className in htmlElement.classList) {
+		// biome-ignore lint/complexity/noForEach: <explanation>
+		htmlElement.classList.forEach((className) => {
 			htmlElement.classList.remove(className);
-		}
+		});
 		htmlElement.classList.add(theme);
 		setBackground(background ? background : "");
 	};
