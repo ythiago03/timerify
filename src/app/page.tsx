@@ -23,12 +23,14 @@ export default function Home() {
 	const [width, setWidth] = useState<number | undefined>(
 		typeof window !== "undefined" ? window.innerWidth : undefined,
 	);
+	const [defaultTimer, setDefaultTimer] = useState<number>(1500);
 
 	const toggleTheme = (theme: string, background?: string): void => {
 		const htmlElement = document.documentElement;
-		for (const className in htmlElement.classList) {
+		// biome-ignore lint/complexity/noForEach: <explanation>
+		htmlElement.classList.forEach((className) => {
 			htmlElement.classList.remove(className);
-		}
+		});
 		htmlElement.classList.add(theme);
 		setBackground(background ? background : "");
 	};
@@ -49,7 +51,7 @@ export default function Home() {
 				style={{ backgroundImage: `${background}` }}
 				className={`bg-${background} w-full min-h-screen flex flex-col  bg-cover bg-center bg-no-repeat`}
 			>
-				<Header toggleTheme={toggleTheme} />
+				<Header changeTimer={setDefaultTimer} toggleTheme={toggleTheme} />
 
 				<main className="grow flex flex-col items-center xl:items-start xl:flex-row">
 					<section
@@ -58,7 +60,7 @@ export default function Home() {
 						<h2 className="text-2xl font-bold mt-5">Tasks</h2>
 						<Tasks />
 					</section>
-					<Timer />
+					<Timer defaultTimer={defaultTimer} />
 					<section
 						className={`${showSound} flex flex-col items-center w-full xl:w-1/3`}
 					>

@@ -27,7 +27,7 @@ const Themes: React.FC<ThemesProps> = ({ toggleTheme }) => {
 		},
 		{
 			title: "Lofi",
-			name: "dark",
+			name: "lofi",
 			coverPath: "/assets/theme-study.png",
 			background: "url('/assets/background-study.gif')",
 		},
