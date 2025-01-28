@@ -77,14 +77,17 @@ Timerify é uma aplicação web de pomodoro projetada para aumentar sua produtiv
 
 Todos os sons ambientes utilizados neste projeto foram obtidos através de licenças Creative Commons ou com permissão explícita dos autores. Agradecemos aos criadores por disponibilizarem estes recursos:
 
-| Som Ambiente | Link Original | Autor | Licença |
-|--------------|---------------|--------|----------|
-| Rain Ambience | [Link para o áudio original](https://exemplo.com/rain) | John Smith | CC BY 4.0 |
-| Ocean Waves | [Link para o áudio original](https://exemplo.com/ocean) | Maria Garcia | CC BY-SA 3.0 |
-| Crackling Fire | [Link para o áudio original](https://exemplo.com/fire) | David Brown | CC BY 3.0 |
-| Forest Ambience | [Link para o áudio original](https://exemplo.com/forest) | Nature Sounds | CC0 |
-| Coffee Shop Ambience | [Link para o áudio original](https://exemplo.com/coffee) | Ambient Sounds | CC BY 4.0 |
-| Thunder Storm | [Link para o áudio original](https://exemplo.com/thunder) | Weather Sounds | CC BY-SA 3.0 |
+| Som Ambiente | Link Original | Autor |
+|--------------|---------------|--------|
+| Night Ambience | [Link para o áudio original](https://pixabay.com/sound-effects/night-ambience-with-cricket-sound-271304/) | TanwerAman |
+| Crackling Fire | [Link para o áudio original](https://pixabay.com/sound-effects/campfire-crackling-fireplace-sound-119594/) | SoundsForYou |
+| Sandy Beach | [Link para o áudio original](https://pixabay.com/sound-effects/sandy-beach-calm-waves-water-nature-sounds-8052/) | juliusH |
+| Rain Ambience | [Link para o áudio original](https://pixabay.com/sound-effects/calming-rain-257596/) | Liecio | 
+| Coffee Shop Ambience | [Link para o áudio original](https://pixabay.com/sound-effects/ambience-coffee-shop-4-17028/) | freesound_community |
+| Dripping Water in Cave | [Link para o áudio original](https://pixabay.com/sound-effects/dripping-water-in-cave-114694/) | solarmusic |
+| Inside Old Train | [Link para o áudio original](https://pixabay.com/sound-effects/inside-old-train-169418/) | kokoreli777 |
+| Dripping Water in Cave | [Link para o áudio original]() | solarmusic |
+| Calm Zen River Flowing | [Link para o áudio original](https://pixabay.com/sound-effects/calm-zen-river-flowing-228223/) | Alex_Jauk |
 
 ## 🛠️ Instalação e Uso
 
