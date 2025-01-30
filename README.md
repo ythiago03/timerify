@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="public/banner-timerify.png" alt="Timerify Banner" width="100%" />
+  <img src="/public/assets/theme-forest.png" alt="Timerify Banner" width="100%" />
 
   <h1>Timerify</h1>
   
