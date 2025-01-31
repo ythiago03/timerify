@@ -75,8 +75,6 @@ Timerify é uma aplicação web de pomodoro projetada para aumentar sua produtiv
 
 ## 🎵 Créditos dos Áudios
 
-Todos os sons ambientes utilizados neste projeto foram obtidos através de licenças Creative Commons ou com permissão explícita dos autores. Agradecemos aos criadores por disponibilizarem estes recursos:
-
 | Som Ambiente | Link Original | Autor |
 |--------------|---------------|--------|
 | Night Ambience | [Link para o áudio original](https://pixabay.com/sound-effects/night-ambience-with-cricket-sound-271304/) | TanwerAman |
