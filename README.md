@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="public/banner-timerify.png" alt="Timerify Banner" width="100%" />
+  <img src="/public/assets/theme-forest.png" alt="Timerify Banner" width="100%" />
 
   <h1>Timerify</h1>
   
@@ -74,8 +74,6 @@ Timerify é uma aplicação web de pomodoro projetada para aumentar sua produtiv
 - [Shadcn/ui](https://ui.shadcn.com/) - Biblioteca de componentes
 
 ## 🎵 Créditos dos Áudios
-
-Todos os sons ambientes utilizados neste projeto foram obtidos através de licenças Creative Commons ou com permissão explícita dos autores. Agradecemos aos criadores por disponibilizarem estes recursos:
 
 | Som Ambiente | Link Original | Autor |
 |--------------|---------------|--------|
