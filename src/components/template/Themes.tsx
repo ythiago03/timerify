@@ -21,7 +21,7 @@ const Themes: React.FC<ThemesProps> = ({ toggleTheme }) => {
 		},
 		{
 			title: "Forest",
-			name: "theme2",
+			name: "forest",
 			coverPath: "/assets/theme-forest.png",
 			background: "url('/assets/background-forest.gif')",
 		},
