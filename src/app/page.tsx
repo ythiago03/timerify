@@ -131,7 +131,7 @@ export default function Home() {
 					<section className="flex flex-col items-center gap-3">
 						<div className="flex gap-3">
 							<Link
-								href="https://github.com/ythiago03/timerify"
+								href="https://github.com/ythiago03/timerify/tree/create-docs?tab=readme-ov-file#-cr%C3%A9ditos-dos-%C3%A1udios"
 								target="_blank"
 								className="flex"
 							>
