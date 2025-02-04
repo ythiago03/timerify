@@ -5,52 +5,73 @@ import { toast } from "sonner";
 const Timer: React.FC<{ defaultTimer: number }> = ({ defaultTimer }) => {
 	const [isRunning, setIsRunning] = useState<boolean>(false);
 	const [time, setTime] = useState<number>(defaultTimer);
-	const [intervalId, setIntervalId] = useState<ReturnType<
-		typeof setInterval
-	> | null>(null);
 	const [isRest, setIsRest] = useState<boolean>(true);
+	const [worker, setWorker] = useState<Worker | null>(null);
 
 	const startTimer = () => {
 		const btnClickAudio = new Audio("/sounds/button-click.mp3");
 		btnClickAudio.play();
-		if (!intervalId) {
-			if (time === 0) {
-				setTime(defaultTimer);
-			}
-			const id = setInterval(() => {
-				setTime((prevTime) => prevTime - 1);
-			}, 1000);
-			setIntervalId(id);
-			setIsRunning(true);
-		}
+		worker?.postMessage({ type: "START" });
+		setIsRunning(true);
 	};
 
 	const pauseTimer = () => {
 		const btnClickAudio = new Audio("/sounds/button-click.mp3");
 		btnClickAudio.play();
-		if (intervalId) {
-			clearInterval(intervalId);
-			setIntervalId(null);
-			setIsRunning(false);
-		}
+		worker?.postMessage({ type: "STOP" });
+		setIsRunning(false);
 	};
 
 	useEffect(() => {
-		const alarmAudio = new Audio("/sounds/alarm.mp3");
+		const blob = new Blob(
+			[
+				`
+			let interval = null;
 
-		if (time === 0) {
-			alarmAudio.play();
-			toast("Time's up!");
-			pauseTimer();
-			if (isRest) {
-				setTime(300); //5 minutes
-				setIsRest(false);
-			} else {
-				setTime(defaultTimer);
-				setIsRest(true);
+			self.onmessage = (e) => {
+				if (e.data.type === "START") {
+					interval = setInterval(() => {
+						self.postMessage({ type: 'TICK' });
+					}, 1000);
+				} else if (e.data.type === 'STOP') {
+					clearInterval(interval);
+				}
 			}
-		}
-	}, [time]);
+			`,
+			],
+			{ type: "text/javascript" },
+		);
+		const workerUlr = URL.createObjectURL(blob);
+		const timerWorker = new Worker(workerUlr);
+
+		timerWorker.onmessage = (e) => {
+			if (e.data.type === "TICK") {
+				const alarmAudio = new Audio("/sounds/alarm.mp3");
+				setTime((prevTime) => {
+					if (prevTime <= 1) {
+						timerWorker.postMessage({ type: "STOP" });
+						alarmAudio.play();
+						toast("Time's up!");
+						if (isRest) {
+							setIsRest(false);
+							setIsRunning(false);
+							return 300; //5 minutes
+						}
+						setIsRest(true);
+						return defaultTimer;
+					}
+					return prevTime - 1;
+				});
+			}
+		};
+
+		setWorker(timerWorker);
+
+		return () => {
+			timerWorker.terminate();
+			URL.revokeObjectURL(workerUlr);
+		};
+	}, []);
 
 	useEffect(() => {
 		resetTimer();
