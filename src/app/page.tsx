@@ -20,9 +20,7 @@ export default function Home() {
 		"invisible",
 	);
 	const [background, setBackground] = useState<string>("");
-	const [width, setWidth] = useState<number | undefined>(
-		typeof window !== "undefined" ? window.innerWidth : undefined,
-	);
+	const [width, setWidth] = useState<number | null>(null);
 	const [defaultTimer, setDefaultTimer] = useState<number>(1500);
 
 	const toggleTheme = (theme: string, background?: string): void => {
@@ -36,6 +34,7 @@ export default function Home() {
 	};
 
 	useEffect(() => {
+		setWidth(1366);
 		if (typeof window === "undefined") return;
 
 		const handleResize = () => setWidth(window.innerWidth);
