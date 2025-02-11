@@ -1,11 +1,12 @@
 import { Pause, Play, RotateCcw } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
 const Timer: React.FC<{ defaultTimer: number }> = ({ defaultTimer }) => {
 	const [isRunning, setIsRunning] = useState<boolean>(false);
 	const [time, setTime] = useState<number>(defaultTimer);
-	const [isRest, setIsRest] = useState<boolean>(true);
+	const timeRef = useRef<number>(defaultTimer);
+	const isRest = useRef<boolean>(true);
 	const [worker, setWorker] = useState<Worker | null>(null);
 
 	const startTimer = () => {
@@ -26,40 +27,51 @@ const Timer: React.FC<{ defaultTimer: number }> = ({ defaultTimer }) => {
 		const blob = new Blob(
 			[
 				`
-			let interval = null;
+        let interval = null;
 
-			self.onmessage = (e) => {
-				if (e.data.type === "START") {
-					interval = setInterval(() => {
-						self.postMessage({ type: 'TICK' });
-					}, 1000);
-				} else if (e.data.type === 'STOP') {
-					clearInterval(interval);
-				}
-			}
-			`,
+        self.onmessage = (e) => {
+          if (e.data.type === "START") {
+            interval = setInterval(() => {
+              self.postMessage({ type: 'TICK' });
+            }, 1000);
+          } else if (e.data.type === 'STOP') {
+            clearInterval(interval);
+          }
+        }
+        `,
 			],
 			{ type: "text/javascript" },
 		);
-		const workerUlr = URL.createObjectURL(blob);
-		const timerWorker = new Worker(workerUlr);
+		const workerUrl = URL.createObjectURL(blob);
+		const timerWorker = new Worker(workerUrl);
 
 		timerWorker.onmessage = (e) => {
 			if (e.data.type === "TICK") {
-				const alarmAudio = new Audio("/sounds/alarm.mp3");
-				setTime((prevTime) => {
-					if (prevTime <= 1) {
-						timerWorker.postMessage({ type: "STOP" });
-						alarmAudio.play();
-						toast("Time's up!");
-						if (isRest) {
-							setIsRest(false);
-							setIsRunning(false);
-							return 300; //5 minutes
-						}
-						setIsRest(true);
-						return defaultTimer;
+				if (timeRef.current <= 0) {
+					const alarmAudio = new Audio("/sounds/alarm.mp3");
+					alarmAudio.play();
+					timerWorker.postMessage({ type: "STOP" });
+					setIsRunning(false);
+
+					if (isRest.current) {
+						// Transição para período de descanso
+						isRest.current = false;
+						const restTime = 5 * 60; // 5 minutos em segundos
+						timeRef.current = restTime;
+						setTime(restTime);
+						toast("Hora do descanso!");
+						return;
 					}
+
+					// Transição para período de trabalho
+					isRest.current = true;
+					timeRef.current = defaultTimer;
+					setTime(defaultTimer);
+					toast("Volta ao trabalho!");
+					return;
+				}
+				setTime((prevTime) => {
+					timeRef.current = prevTime - 1;
 					return prevTime - 1;
 				});
 			}
@@ -69,9 +81,9 @@ const Timer: React.FC<{ defaultTimer: number }> = ({ defaultTimer }) => {
 
 		return () => {
 			timerWorker.terminate();
-			URL.revokeObjectURL(workerUlr);
+			URL.revokeObjectURL(workerUrl);
 		};
-	}, []);
+	}, [defaultTimer]);
 
 	useEffect(() => {
 		resetTimer();
@@ -79,6 +91,8 @@ const Timer: React.FC<{ defaultTimer: number }> = ({ defaultTimer }) => {
 
 	const resetTimer = () => {
 		pauseTimer();
+		isRest.current = true;
+		timeRef.current = defaultTimer;
 		setTime(defaultTimer);
 	};
 
@@ -101,11 +115,11 @@ const Timer: React.FC<{ defaultTimer: number }> = ({ defaultTimer }) => {
 			</span>
 			{isRunning ? (
 				<button type="button" onClick={pauseTimer}>
-					<Pause className="h-12 w-12 md:h-16 md:w-16  lg:h-[4.5rem] lg:w-[4.5rem]" />
+					<Pause className="h-12 w-12 md:h-16 md:w-16 lg:h-[4.5rem] lg:w-[4.5rem]" />
 				</button>
 			) : (
 				<button type="button" onClick={startTimer}>
-					<Play className="h-12 w-12 md:h-16 md:w-16  lg:h-[4.5rem] lg:w-[4.5rem]" />
+					<Play className="h-12 w-12 md:h-16 md:w-16 lg:h-[4.5rem] lg:w-[4.5rem]" />
 				</button>
 			)}
 		</div>
