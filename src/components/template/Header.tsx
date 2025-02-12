@@ -77,7 +77,7 @@ const Header = ({ toggleTheme, changeTimer }: HeaderProps) => {
 							<SheetTrigger>
 								<Palette />
 							</SheetTrigger>
-							<SheetContent>
+							<SheetContent className="border-none">
 								<SheetHeader>
 									<SheetTitle>Choose your theme</SheetTitle>
 									<Themes toggleTheme={toggleTheme} />
@@ -90,7 +90,7 @@ const Header = ({ toggleTheme, changeTimer }: HeaderProps) => {
 							<SheetTrigger>
 								<Settings />
 							</SheetTrigger>
-							<SheetContent>
+							<SheetContent className="border-none">
 								<SheetHeader>
 									<SheetTitle className="mb-4">Settings</SheetTitle>
 									<div className="w-full flex flex-col items-center">
