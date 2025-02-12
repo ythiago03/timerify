@@ -31,6 +31,18 @@ const Themes: React.FC<ThemesProps> = ({ toggleTheme }) => {
 			coverPath: "/assets/theme-study.png",
 			background: "url('/assets/background-study.gif')",
 		},
+		{
+			title: "Coffee",
+			name: "coffee",
+			coverPath: "/assets/theme-coffee.png",
+			background: "url('/assets/background-coffee.gif')",
+		},
+		{
+			title: "Lain",
+			name: "lain",
+			coverPath: "/assets/theme-lain.png",
+			background: "url('/assets/background-lain.gif')",
+		},
 	];
 
 	return (
