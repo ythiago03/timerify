@@ -27,14 +27,13 @@ Timerify é uma aplicação web de pomodoro projetada para aumentar sua produtiv
 - Timer padrão: 25 minutos de foco e 5 minutos de pausa
 - Interface intuitiva e minimalista
 - Alertas sonoros suaves para início e fim de cada sessão
-- Personalize os tempos de foco e pausa conforme sua necessidade
+- Personalize o tempo de foco conforme sua necessidade
 
 ### 📝 Gerenciador de Tarefas Integrado
 ![Todo List Demo](./public/gifs/todo-demo.gif)
 - Crie e organize suas tarefas para cada sessão
 - Marque tarefas como concluídas
 - Mantenha o foco nos objetivos importantes
-- Histórico de tarefas completadas
 
 ### 🎵 Ambiente Sonoro Imersivo
 ![Ambient Sounds Demo](./public/gifs/sounds-demo.gif)
@@ -44,8 +43,9 @@ Timerify é uma aplicação web de pomodoro projetada para aumentar sua produtiv
   - Crepitar de fogueira
   - Sons da floresta
   - Ambiente de café
-  - Trovões distantes
+  - Entre outros
 - Controle individual de volume para cada som
+- Controle global de volume
 - Misture diferentes sons para criar seu ambiente perfeito
 
 ### 🎬 Integração com YouTube
@@ -62,8 +62,7 @@ Timerify é uma aplicação web de pomodoro projetada para aumentar sua produtiv
   - Dark
   - Forest
   - Lo-fi
-  - Synthwave
-  - Minimal
+  - Entre outros
 - Adapte a interface ao seu gosto e ambiente
 
 ## 🚀 Tecnologias Utilizadas
@@ -121,10 +120,10 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 
 ## 📧 Contato
 
-Se você tiver alguma dúvida ou sugestão, por favor, abra uma issue no repositório ou entre em contato através das redes sociais do projeto.
+Se você tiver alguma dúvida ou sugestão, por favor, abra uma issue no repositório ou entre em contato através das minhas redes sociais.
 
 ---
 
 <div align="center">
-  Desenvolvido com ❤️ para aumentar a produtividade de todos
+  Desenvolvido com ❤️ para aumentar a produtividade de todos por Thiago Fidêncio.
 </div>
