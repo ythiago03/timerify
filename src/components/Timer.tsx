@@ -59,7 +59,7 @@ const Timer: React.FC<{ defaultTimer: number }> = ({ defaultTimer }) => {
 						const restTime = 5 * 60; // 5 minutos em segundos
 						timeRef.current = restTime;
 						setTime(restTime);
-						toast("Hora do descanso!");
+						toast("Rest Time!");
 						return;
 					}
 
@@ -67,7 +67,7 @@ const Timer: React.FC<{ defaultTimer: number }> = ({ defaultTimer }) => {
 					isRest.current = true;
 					timeRef.current = defaultTimer;
 					setTime(defaultTimer);
-					toast("Volta ao trabalho!");
+					toast("Work Time!");
 					return;
 				}
 				setTime((prevTime) => {
