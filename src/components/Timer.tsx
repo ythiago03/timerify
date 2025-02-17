@@ -2,7 +2,9 @@ import { Pause, Play, RotateCcw } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
-const Timer: React.FC<{ defaultTimer: number }> = ({ defaultTimer }) => {
+const Timer: React.FC<{
+	defaultTimer: number;
+}> = ({ defaultTimer }) => {
 	const [isRunning, setIsRunning] = useState<boolean>(false);
 	const [time, setTime] = useState<number>(defaultTimer);
 	const timeRef = useRef<number>(defaultTimer);
@@ -74,6 +76,8 @@ const Timer: React.FC<{ defaultTimer: number }> = ({ defaultTimer }) => {
 					timeRef.current = prevTime - 1;
 					return prevTime - 1;
 				});
+
+				document.title = `Timerify - ${formatTime(timeRef.current)}`;
 			}
 		};
 
