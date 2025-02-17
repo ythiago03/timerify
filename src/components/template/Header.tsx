@@ -8,12 +8,10 @@ import {
 	SheetTrigger,
 } from "../ui/sheet";
 import Themes from "./Themes";
-import { useState, type Dispatch, type SetStateAction } from "react";
-import { Input } from "../ui/input";
+import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
 import {
 	InputOTP,
 	InputOTPGroup,
-	InputOTPSeparator,
 	InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { Button } from "../ui/button";
@@ -23,11 +21,12 @@ interface HeaderProps {
 	changeTimer: Dispatch<SetStateAction<number>>;
 }
 
-const Header = ({ toggleTheme, changeTimer }: HeaderProps) => {
+const Header = ({ toggleTheme: changeTheme, changeTimer }: HeaderProps) => {
 	const [updatedTimer, setUpdatedTimer] = useState<string>("2500");
 	const [updatedTimerError, setUpdatedTimerError] = useState<string | null>(
 		null,
 	);
+	const [darkLogo, setDarkLogo] = useState<boolean>(false);
 
 	const validateTime = (): boolean => {
 		setUpdatedTimerError(null);
@@ -64,10 +63,31 @@ const Header = ({ toggleTheme, changeTimer }: HeaderProps) => {
 		const convertedNewTime = minutes * 60 + seconds;
 		changeTimer(convertedNewTime);
 	};
+
+	const toggleTheme = (theme: string, background?: string): void => {
+		if (theme === "light") {
+			setDarkLogo(true);
+			changeTheme(theme, background);
+			return;
+		}
+		setDarkLogo(false);
+		changeTheme(theme, background);
+	};
+
 	return (
 		<header className="w-full flex justify-center p-3">
 			<div className="flex w-full px-1 lg:px-0 lg:w-1/2 justify-between items-center ">
-				<h1 className="text-3xl font-bold">Timerify</h1>
+				{darkLogo ? (
+					<img src="/assets/logo-dark.svg" alt="Logo" width={130} height={80} />
+				) : (
+					<img
+						src="/assets/logo-light.svg"
+						alt="Logo"
+						width={130}
+						height={80}
+					/>
+				)}
+
 				<ul className="flex gap-3">
 					<li className="flex gap-5">
 						<GlobalSoundControl />
