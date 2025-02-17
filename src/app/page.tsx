@@ -1,16 +1,17 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import Link from "next/link";
+
+import { GlobalAudioProvider } from "@/context/GlobalAudioContext";
+
 import SoundCards from "@/components/template/SoundCards";
 import Tasks from "@/components/template/Tasks";
 import Timer from "@/components/Timer";
-import GithubIcon from "/assets/github.svg";
-
-import { GlobalAudioProvider } from "@/context/GlobalAudioContext";
-import { Award, BookAudio, ClipboardList, Github } from "lucide-react";
-import { useEffect, useState } from "react";
-import Link from "next/link";
 import Youtube from "@/components/template/Youtube";
 import Header from "@/components/template/Header";
+
+import { Award, BookAudio, ClipboardList, Github } from "lucide-react";
 
 export default function Home() {
 	const [showTasks, setShowTasks] = useState<"visible" | "invisible">(
@@ -130,7 +131,7 @@ export default function Home() {
 					<section className="flex flex-col items-center gap-3">
 						<div className="flex gap-3">
 							<Link
-								href="https://github.com/ythiago03/timerify/tree/create-docs?tab=readme-ov-file#-cr%C3%A9ditos-dos-%C3%A1udios"
+								href="https://github.com/ythiago03/timerify?tab=readme-ov-file#-cr%C3%A9ditos-dos-%C3%A1udios"
 								target="_blank"
 								className="flex"
 							>
