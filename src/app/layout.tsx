@@ -18,6 +18,7 @@ const geistMono = localFont({
 export const metadata: Metadata = {
 	title: "Timerify",
 	description: "Pomodoro focus app",
+	icons: "/favicon.svg",
 };
 
 export default function RootLayout({
