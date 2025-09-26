@@ -1,5 +1,6 @@
 import useTimer from "@/hooks/useTimer";
 import { Pause, Play, RotateCcw } from "lucide-react";
+import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 
 const Timer = () => {
 	const {
@@ -11,24 +12,63 @@ const Timer = () => {
 		formatTime,
 	} = useTimer();
 
+	const teste = (value: string) => {
+		console.log(value);
+	};
+
 	return (
-		<div className="flex items-center gap-4 m-auto">
-			<button type="button" onClick={resetTimer}>
-				<RotateCcw className="h-12 w-12 md:h-16 md:w-16 lg:h-[4.5rem] lg:w-[4.5rem]" />
-			</button>
-			<span className="text-5xl md:text-7xl lg:text-8xl font-bold">
-				{formatTime(timer)}
-			</span>
-			{isTimerRunning ? (
-				<button type="button" onClick={pauseTimer}>
-					<Pause className="h-12 w-12 md:h-16 md:w-16 lg:h-[4.5rem] lg:w-[4.5rem]" />
+		<section className="w-1/4 flex flex-col items-center gap-10 m-auto bg-secondary/70 rounded-xl p-4 border-2 border-secondary">
+			<Tabs
+				defaultValue="focus"
+				onValueChange={(value: string) => teste(value)}
+			>
+				<TabsList>
+					<TabsTrigger value="focus">Focus Time</TabsTrigger>
+					<TabsTrigger value="short">Short Break</TabsTrigger>
+					<TabsTrigger value="long">Long Break</TabsTrigger>
+				</TabsList>
+			</Tabs>
+			<div className="rounded-full size-64 flex items-center justify-center my-10 border-4 border-foreground/20">
+				<div className="text-center">
+					<h2 className="text-5xl md:text-6xl font-bold text-ring">
+						{formatTime(timer)}
+					</h2>
+					<p className="text-lg">Focus Time</p>
+				</div>
+			</div>
+
+			<div className="flex gap-4 ">
+				{isTimerRunning ? (
+					<button
+						type="button"
+						className="size-16 flex items-center justify-center bg-ring rounded-full"
+						onClick={pauseTimer}
+					>
+						<Pause className="size-6" />
+					</button>
+				) : (
+					<button
+						type="button"
+						className="size-16 flex items-center justify-center bg-ring rounded-full"
+						onClick={startTimer}
+					>
+						<Play className="size-6" />
+					</button>
+				)}
+				<button
+					type="button"
+					className="size-16 flex items-center justify-center rounded-full border border-foreground"
+					onClick={resetTimer}
+				>
+					<RotateCcw className="size-6" />
 				</button>
-			) : (
-				<button type="button" onClick={startTimer}>
-					<Play className="h-12 w-12 md:h-16 md:w-16 lg:h-[4.5rem] lg:w-[4.5rem]" />
-				</button>
-			)}
-		</div>
+			</div>
+
+			<div className="flex flex-col items-center">
+				<p>Sessions Completed</p>
+				<span className="text-2xl font-bold text-ring">0</span>
+			</div>
+		</section>
 	);
 };
 
