@@ -46,7 +46,7 @@ const Themes: React.FC<ThemesProps> = ({ toggleTheme }) => {
 	];
 
 	return (
-		<ScrollArea className="h-screen p-4 w-[350px]">
+		<ScrollArea className="h-[94vh] p-4 w-[350px]">
 			<div className="flex flex-col gap-4">
 				{allThemes.map((theme) => (
 					<CardTheme

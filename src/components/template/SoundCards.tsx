@@ -13,7 +13,7 @@ import {
 
 const SoundCards: React.FC = () => {
 	return (
-		<div className="grid grid-cols-3 gap-5 backdrop-blur-sm rounded-lg">
+		<div className="grid grid-cols-3 gap-2 backdrop-blur-sm rounded-lg">
 			<CardSound soundName="night" icon={TentTree} />
 			<CardSound soundName="campfire" icon={FlameKindling} />
 			<CardSound soundName="beach" icon={TreePalm} />

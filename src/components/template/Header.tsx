@@ -8,25 +8,26 @@ import {
 	SheetTrigger,
 } from "../ui/sheet";
 import Themes from "./Themes";
-import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
+import { useState } from "react";
 import {
 	InputOTP,
 	InputOTPGroup,
 	InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { Button } from "../ui/button";
+import useTimer from "@/hooks/useTimer";
 
 interface HeaderProps {
 	toggleTheme: (theme: string, background?: string) => void;
-	changeTimer: Dispatch<SetStateAction<number>>;
 }
 
-const Header = ({ toggleTheme: changeTheme, changeTimer }: HeaderProps) => {
+const Header = ({ toggleTheme: changeTheme }: HeaderProps) => {
 	const [updatedTimer, setUpdatedTimer] = useState<string>("2500");
 	const [updatedTimerError, setUpdatedTimerError] = useState<string | null>(
 		null,
 	);
 	const [darkLogo, setDarkLogo] = useState<boolean>(false);
+	const { changeTimer } = useTimer();
 
 	const validateTime = (): boolean => {
 		setUpdatedTimerError(null);
