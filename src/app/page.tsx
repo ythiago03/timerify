@@ -63,10 +63,17 @@ export default function Home() {
 						</section>
 						<Timer />
 						<section
-							className={`${showSound} flex flex-col items-center w-full xl:w-1/3`}
+							className={`${showSound} w-1/4 flex flex-col gap-10 m-auto bg-secondary/70 rounded-xl p-4 border-2 border-secondary`}
 						>
-							<h2 className="text-2xl font-bold mt-5">Sounds</h2>
-							<SoundCards />
+							<h2 className="text-2xl font-bold mt-5">Audio & Sounds</h2>
+
+							<div className="w-full bg-secondary/50 rounded-xl p-4 border-2 border-secondary">
+								<h3 className="text-lg font-semibold">Youtube Audio</h3>
+							</div>
+							<div className="space-y-4">
+								<h3 className="text-lg font-semibold">Ambient Sounds</h3>
+								<SoundCards />
+							</div>
 						</section>
 					</main>
 
