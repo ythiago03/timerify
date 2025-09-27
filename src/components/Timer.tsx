@@ -6,21 +6,22 @@ const Timer = () => {
 	const {
 		timer,
 		isTimerRunning,
+		sessions,
+		pomodoroType,
 		startTimer,
 		pauseTimer,
 		resetTimer,
 		formatTime,
+		changeCicle,
 	} = useTimer();
-
-	const teste = (value: string) => {
-		console.log(value);
-	};
 
 	return (
 		<section className="w-1/4 flex flex-col items-center gap-10 m-auto bg-secondary/70 rounded-xl p-4 border-2 border-secondary">
 			<Tabs
 				defaultValue="focus"
-				onValueChange={(value: string) => teste(value)}
+				onValueChange={(value: string) =>
+					changeCicle(value as "focus" | "short" | "long")
+				}
 			>
 				<TabsList>
 					<TabsTrigger value="focus">Focus Time</TabsTrigger>
@@ -33,7 +34,11 @@ const Timer = () => {
 					<h2 className="text-5xl md:text-6xl font-bold text-ring">
 						{formatTime(timer)}
 					</h2>
-					<p className="text-lg">Focus Time</p>
+					<p className="text-lg">
+						{pomodoroType === "focus" && "Focus Time"}
+						{pomodoroType === "short" && "Short Break"}
+						{pomodoroType === "long" && "Long Break"}
+					</p>
 				</div>
 			</div>
 
@@ -66,7 +71,7 @@ const Timer = () => {
 
 			<div className="flex flex-col items-center">
 				<p>Sessions Completed</p>
-				<span className="text-2xl font-bold text-ring">0</span>
+				<span className="text-2xl font-bold text-ring">{sessions}</span>
 			</div>
 		</section>
 	);
