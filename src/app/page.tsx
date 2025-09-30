@@ -11,18 +11,25 @@ import Timer from "@/components/Timer";
 import Youtube from "@/components/template/Youtube";
 import Header from "@/components/template/Header";
 
-import { Award, BookAudio, ClipboardList, Github } from "lucide-react";
+import {
+	Award,
+	BookAudio,
+	ClipboardList,
+	Github,
+	PlayIcon,
+	Plus,
+	SkipBackIcon,
+	SkipForwardIcon,
+	Volume2Icon,
+} from "lucide-react";
 import { TimerProvider } from "@/context/TimerContext";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Slider } from "@radix-ui/react-slider";
+import AudioControl from "@/components/template/AudioControl";
 
 export default function Home() {
-	const [showTasks, setShowTasks] = useState<"visible" | "invisible">(
-		"invisible",
-	);
-	const [showSound, setShowSounds] = useState<"visible" | "invisible">(
-		"invisible",
-	);
 	const [background, setBackground] = useState<string>("");
-	const [width, setWidth] = useState<number | null>(null);
 
 	const toggleTheme = (theme: string, background?: string): void => {
 		const htmlElement = document.documentElement;
@@ -34,17 +41,6 @@ export default function Home() {
 		setBackground(background ? background : "");
 	};
 
-	useEffect(() => {
-		setWidth(1366);
-		if (typeof window === "undefined") return;
-
-		const handleResize = () => setWidth(window.innerWidth);
-
-		window.addEventListener("resize", handleResize);
-
-		return () => window.removeEventListener("resize", handleResize);
-	}, []);
-
 	return (
 		<GlobalAudioProvider>
 			<TimerProvider>
@@ -55,87 +51,15 @@ export default function Home() {
 					<Header toggleTheme={toggleTheme} />
 
 					<main className="grow flex flex-col items-center xl:items-start xl:flex-row">
-						<section
-							className={`${showTasks} flex flex-col items-center w-full xl:w-1/3 mb-6 xl:mb-0`}
-						>
+						<section className="flex flex-col items-center w-full xl:w-1/3 mb-6 xl:mb-0">
 							<h2 className="text-2xl font-bold mt-5">Tasks</h2>
 							<Tasks />
 						</section>
 						<Timer />
-						<section
-							className={`${showSound} w-1/4 flex flex-col gap-10 m-auto bg-secondary/70 rounded-xl p-4 border-2 border-secondary`}
-						>
-							<h2 className="text-2xl font-bold mt-5">Audio & Sounds</h2>
-
-							<div className="w-full bg-secondary/50 rounded-xl p-4 border-2 border-secondary">
-								<h3 className="text-lg font-semibold">Youtube Audio</h3>
-							</div>
-							<div className="space-y-4">
-								<h3 className="text-lg font-semibold">Ambient Sounds</h3>
-								<SoundCards />
-							</div>
-						</section>
+						<AudioControl />
 					</main>
 
 					<footer className="w-full p-3 flex flex-col justify-center gap-3 ">
-						<section className="gap-3 mb-6 flex flex-col lg:flex-row items-center lg:items-start justify-normal lg:justify-center">
-							{width && width < 1024 && (
-								<div className="flex justify-between w-1/2">
-									<button
-										type="button"
-										onClick={() =>
-											setShowTasks((prev) =>
-												prev === "visible" ? "invisible" : "visible",
-											)
-										}
-										className="flex items-center"
-									>
-										<ClipboardList className="h-16 w-16" />
-									</button>
-									<button
-										type="button"
-										onClick={() =>
-											setShowSounds((prev) =>
-												prev === "visible" ? "invisible" : "visible",
-											)
-										}
-										className="flex items-center"
-									>
-										<BookAudio className="h-16 w-16" />
-									</button>
-								</div>
-							)}
-
-							{width && width >= 1024 && (
-								<button
-									type="button"
-									onClick={() =>
-										setShowTasks((prev) =>
-											prev === "visible" ? "invisible" : "visible",
-										)
-									}
-									className="flex items-center"
-								>
-									<ClipboardList className="h-16 w-16" />
-								</button>
-							)}
-
-							<Youtube className="order-3 lg:order-none" />
-
-							{width && width >= 1024 && (
-								<button
-									type="button"
-									onClick={() =>
-										setShowSounds((prev) =>
-											prev === "visible" ? "invisible" : "visible",
-										)
-									}
-									className="flex items-center"
-								>
-									<BookAudio className="h-16 w-16" />
-								</button>
-							)}
-						</section>
 						<section className="flex flex-col items-center gap-3">
 							<div className="flex gap-3">
 								<Link

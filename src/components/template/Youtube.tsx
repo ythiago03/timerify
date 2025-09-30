@@ -1,4 +1,11 @@
-import { FileMusic, SkipBack, Pause, SkipForward, Play } from "lucide-react";
+import {
+	Pause,
+	Play,
+	Plus,
+	SkipForwardIcon,
+	Volume2Icon,
+	SkipBackIcon,
+} from "lucide-react";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
@@ -29,6 +36,8 @@ const Youtube: React.FC<{ className?: string }> = ({ className = "" }) => {
 	const [player, setPlayer] = useState<YT.Player | null>(null);
 	const [isPlaying, setIsPlaying] = useState<boolean>(false);
 	const [videoTitle, setVideoTitle] = useState<string>("");
+	const [queue, setQueue] = useState<string[]>([]);
+	const [currentIndex, setCurrentIndex] = useState<number>(0);
 
 	useEffect((): void => {
 		loadYouTubeAPI();
@@ -36,6 +45,7 @@ const Youtube: React.FC<{ className?: string }> = ({ className = "" }) => {
 
 	const loadYouTubeAPI = (): void => {
 		const script = document.createElement("script");
+
 		script.src = "https://www.youtube.com/iframe_api";
 		document.body.appendChild(script);
 
@@ -58,33 +68,31 @@ const Youtube: React.FC<{ className?: string }> = ({ className = "" }) => {
 				if (stateEvent.data === window.YT.PlayerState.PLAYING) {
 					updateVideo(event.target);
 				}
+				if (stateEvent.data === window.YT.PlayerState.ENDED) {
+					nexVideo();
+				}
 			},
 		);
+		event.target.setVolume(50);
 	};
 
 	const addVideo = (): void => {
 		try {
 			if (!player) return;
 			const url = new URL(videoUrl);
-			const playlistId = url.searchParams.get("list");
 			const videoId = url.searchParams.get("v");
 
 			console.log(url);
 
-			if ((!videoId && !playlistId) || url.origin === "")
-				throw new Error("Invalid URL");
+			if (!videoId || url.origin === "") throw new Error("Invalid URL");
 
-			if (playlistId) {
-				player.loadPlaylist({
-					listType: "playlist",
-					list: playlistId,
-				});
-			} else if (videoId) {
+			if (queue.length === 0) {
 				player.loadVideoById(videoId);
+				setCurrentIndex(0);
+				updateVideo(player);
+				setIsPlaying(true);
 			}
-			player.setVolume(50);
-			setIsPlaying(true);
-			updateVideo(player);
+			setQueue((prevQueue) => [...prevQueue, videoId]);
 			setVideoUrl("");
 		} catch (error) {
 			console.error("Error adding video:", error);
@@ -92,6 +100,13 @@ const Youtube: React.FC<{ className?: string }> = ({ className = "" }) => {
 				description: "Please insert a valid link to a youtube video",
 			});
 		}
+	};
+
+	const playCurrentVideo = (index: number) => {
+		if (!player || !queue[index]) return;
+		player.loadVideoById(queue[index]);
+		setCurrentIndex(index);
+		setIsPlaying(true);
 	};
 
 	const handlePlay = (): void => {
@@ -105,18 +120,19 @@ const Youtube: React.FC<{ className?: string }> = ({ className = "" }) => {
 	};
 
 	const nexVideo = (): void => {
-		if (!player) return;
-		player?.nextVideo();
-		player?.setVolume(50);
-		updateVideo(player);
+		if (currentIndex + 1 < queue.length) {
+			playCurrentVideo(currentIndex + 1);
+		} else {
+			toast.info("There are no upcoming videos");
+		}
 	};
 
 	const previousVideo = (): void => {
-		if (!player) return;
-
-		player?.previousVideo();
-		player?.setVolume(50);
-		updateVideo(player);
+		if (currentIndex - 1 >= 0) {
+			playCurrentVideo(currentIndex - 1);
+		} else {
+			toast.info("There are no previous videos");
+		}
 	};
 
 	const updateVideo = (player: ExtedendedYTPlayer): void => {
@@ -129,76 +145,83 @@ const Youtube: React.FC<{ className?: string }> = ({ className = "" }) => {
 	};
 
 	return (
-		<div
-			className={`${className} flex items-center p-3 gap-3 h-20 w-full md:w-1/2 lg:w-1/3 xl:w-1/4 mx-4 md:mx-0 rounded-lg border border-foreground`}
-		>
+		<>
 			<div className="hidden" id="youtube-player" />
-			<Popover>
-				<PopoverTrigger asChild>
-					<button type="button">
-						<FileMusic className="h-12 w-12" />
-					</button>
-				</PopoverTrigger>
-				<PopoverContent side="top" className="w-80 mb-6">
-					<h4 className="font-bold leading-none">Choose a song from youtube</h4>
-					<p className="text-sm text-muted-foreground">
-						Insert a link to some music or playlist from
-						<span className="font-bold text-foreground"> youtube</span> to play
-						in the background.
-					</p>
-					<div className="grid grid-cols-3 items-center mt-4 gap-4">
-						<Label htmlFor="width">Link</Label>
-						<Input
-							onChange={(e) => setVideoUrl(e.target.value)}
-							id="width"
-							className="col-span-2 h-8"
+			<div className="flex items-center gap-2 my-3">
+				<Input
+					type="text"
+					className="bg-transparent border-2  border-secondary"
+					placeholder="Paste Youtube URL here"
+					value={videoUrl}
+					onChange={(e) => setVideoUrl(e.target.value)}
+				/>
+				<Button variant="outline" disabled={!videoUrl} onClick={addVideo}>
+					<Plus /> Add
+				</Button>
+			</div>
+
+			{queue.length > 0 && (
+				<>
+					<div className="bg-gradient-to-r from-red-500/10 to-pink-500/10 border border-red-500/20 rounded-lg p-4">
+						<div className="flex items-center gap-3 mb-3">
+							<span className="size-2 bg-red-500 rounded-full animate-pulse" />
+							<span className="text-sm text-red-400">NOW PLAYING</span>
+						</div>
+						<div className="flex items-center justify-between">
+							<div className="flex-1 min-w-0">
+								<h4 className="font-semibold text-foreground truncate">
+									{videoTitle}
+								</h4>
+								<p className="text-sm text-muted-foreground">
+									Track {currentIndex + 1} of {queue.length}
+								</p>
+							</div>
+						</div>
+					</div>
+
+					<div className="flex items-center justify-center gap-2 mt-3">
+						<Button
+							variant="ghost"
+							size="icon"
+							className="text-muted-foreground hover:text-foreground"
+							onClick={previousVideo}
+						>
+							<SkipBackIcon />
+						</Button>
+
+						<Button
+							variant="default"
+							size="lg"
+							className="bg-red-600 hover:bg-red-700 text-white px-6"
+							onClick={handlePlay}
+						>
+							{isPlaying ? <Pause /> : <Play />}
+							<span className="ml-2">{isPlaying ? "Pause" : "Play"}</span>
+						</Button>
+
+						<Button
+							variant="ghost"
+							size="icon"
+							className="text-muted-foreground hover:text-foreground"
+							onClick={nexVideo}
+						>
+							<SkipForwardIcon />
+						</Button>
+					</div>
+
+					<div className="flex items-center gap-3 mt-3">
+						<Volume2Icon className="size-4 text-muted-foreground" />
+						<Slider
+							defaultValue={[50]}
+							onValueChange={(e) => handleYoutubeVolume(e[0])}
+							max={100}
+							step={1}
+							className="flex-1 cursor-pointer"
 						/>
 					</div>
-					<div className="flex gap-3">
-						<PopoverClose asChild>
-							<Button className="mt-3 w-1/2" variant="destructive">
-								Cancel
-							</Button>
-						</PopoverClose>
-
-						<PopoverClose asChild>
-							<Button onClick={addVideo} className="mt-3 w-1/2">
-								Play
-							</Button>
-						</PopoverClose>
-					</div>
-				</PopoverContent>
-			</Popover>
-
-			<div className="flex flex-col w-full">
-				<span className="font-bold">Playing now</span>
-				<div className="w-full relative overflow-hidden h-8 flex items-center">
-					<div className="absolute whitespace-nowrap animate-marquee">
-						<span>{videoTitle}</span>
-					</div>
-				</div>
-			</div>
-			<div className="flex flex-col gap-4">
-				<div className="flex ml-auto">
-					<button type="button" onClick={previousVideo}>
-						<SkipBack />
-					</button>
-					<button type="button" onClick={handlePlay}>
-						{isPlaying ? <Pause /> : <Play />}
-					</button>
-					<button type="button" onClick={nexVideo}>
-						<SkipForward />
-					</button>
-				</div>
-				<Slider
-					onValueChange={(e) => handleYoutubeVolume(e[0])}
-					defaultValue={[50]}
-					max={100}
-					step={1}
-					className="w-full mt-auto cursor-pointer"
-				/>
-			</div>
-		</div>
+				</>
+			)}
+		</>
 	);
 };
 
