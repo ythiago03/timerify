@@ -16,6 +16,7 @@ import {
 	BookAudio,
 	ClipboardList,
 	Github,
+	GithubIcon,
 	PlayIcon,
 	Plus,
 	SkipBackIcon,
@@ -50,35 +51,16 @@ export default function Home() {
 				>
 					<Header toggleTheme={toggleTheme} />
 
-					<main className="grow flex flex-col items-center xl:items-start xl:flex-row">
-						<section className="flex flex-col items-center w-full xl:w-1/3 mb-6 xl:mb-0">
-							<h2 className="text-2xl font-bold mt-5">Tasks</h2>
-							<Tasks />
-						</section>
+					<main className="w-11/12 mx-auto grid grid-cols-3 gap-8 px-20">
+						<Tasks />
 						<Timer />
 						<AudioControl />
 					</main>
 
-					<footer className="w-full p-3 flex flex-col justify-center gap-3 ">
-						<section className="flex flex-col items-center gap-3">
-							<div className="flex gap-3">
-								<Link
-									href="https://github.com/ythiago03/timerify?tab=readme-ov-file#-cr%C3%A9ditos-dos-%C3%A1udios"
-									target="_blank"
-									className="flex"
-								>
-									<Award /> Credits
-								</Link>
-								<Link
-									href="https://github.com/ythiago03/timerify"
-									target="_blank"
-									className="flex"
-								>
-									<Github /> Timerify
-								</Link>
-							</div>
-							<span className="text-sm text-center">
-								Built with React.js, Tailwindcss and Shadcn by{" "}
+					<footer className="mt-12 mb-6 pt-8 border-t border-border">
+						<div className="mx-auto max-w-7xl text-center">
+							<p className="text-sm text-muted-foreground mb-3">
+								Built with React.js, Tailwind CSS and Shadcn by{" "}
 								<Link
 									className="underline"
 									target="_blank"
@@ -86,9 +68,17 @@ export default function Home() {
 								>
 									Thiago Henrique
 								</Link>
-								.
-							</span>
-						</section>
+							</p>
+							<Link
+								href="https://github.com/ythiago03/timerify"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="inline-flex items-center gap-2 text-sm text-primary hover:text-primary/80"
+							>
+								<GithubIcon className="size-4" />
+								View on GitHub
+							</Link>
+						</div>
 					</footer>
 				</div>
 			</TimerProvider>
