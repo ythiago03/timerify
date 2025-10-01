@@ -6,7 +6,7 @@ import Youtube from "./Youtube";
 
 const AudioControl = () => {
 	return (
-		<section className="w-1/4 flex flex-col gap-10 m-auto bg-secondary/70 rounded-xl p-4 border-2 border-secondary">
+		<section className="w-full h-fit flex flex-col gap-10 bg-secondary/70 rounded-xl p-4 border-2 border-secondary">
 			<h2 className="text-2xl font-bold mt-5">Audio & Sounds</h2>
 
 			<div className="w-full bg-secondary/50 rounded-xl p-4 border-2 border-secondary">

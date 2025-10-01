@@ -16,7 +16,7 @@ const Timer = () => {
 	} = useTimer();
 
 	return (
-		<section className="w-1/4 flex flex-col items-center gap-10 mx-auto bg-secondary/70 rounded-xl p-4 border-2 border-secondary">
+		<section className="w-full h-fit flex flex-col items-center gap-10 bg-secondary/70 rounded-xl p-4 border-2 border-secondary">
 			<Tabs
 				defaultValue="focus"
 				onValueChange={(value: string) =>
