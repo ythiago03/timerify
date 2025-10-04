@@ -1,4 +1,4 @@
-import { type ElementType, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { useGlobalAudio } from "@/context/GlobalAudioContext";
 
@@ -65,8 +65,6 @@ const CardSound: React.FC<CardSoundProps> = ({ icon, soundName, color }) => {
 		sound.volume = volumeRef.current;
 	};
 
-	const conditionalStyle = isPlaying ? "bg-foreground/15 backdrop-blur-sm" : "";
-
 	return (
 		<div className="w-full flex flex-col gap-2">
 			<button
@@ -90,7 +88,7 @@ const CardSound: React.FC<CardSoundProps> = ({ icon, soundName, color }) => {
 					defaultValue={[(soundRef.current?.volume ?? 0) * 100]}
 					max={100}
 					step={1}
-					className="w-full px-2"
+					className="w-full px-2 cursor-pointer"
 				/>
 			)}
 		</div>

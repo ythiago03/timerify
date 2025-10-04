@@ -1,5 +1,7 @@
-import useTimer from "@/hooks/useTimer";
 import { Pause, Play, RotateCcw } from "lucide-react";
+
+import useTimer from "@/hooks/useTimer";
+
 import { Tabs, TabsList, TabsTrigger } from "../ui/tabs";
 
 const Timer = () => {

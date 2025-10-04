@@ -1,7 +1,8 @@
+import { useState } from "react";
 import { PlusIcon, Trash2Icon } from "lucide-react";
+
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import { useState } from "react";
 import { Checkbox } from "../ui/checkbox";
 
 interface TaskInterface {

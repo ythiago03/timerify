@@ -1,4 +1,12 @@
+import { useState } from "react";
 import { Save, SettingsIcon, TrashIcon } from "lucide-react";
+
+import type { TimerSettings } from "@/context/UserPreferences";
+
+import { useUserPreferences } from "@/hooks/useUserPreferences";
+import useTimer from "@/hooks/useTimer";
+
+import { toast } from "sonner";
 import { Button } from "../ui/button";
 import {
 	Dialog,
@@ -13,11 +21,6 @@ import { Label } from "../ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { Card } from "../ui/card";
 import Themes from "./Themes";
-import { useUserPreferences } from "@/hooks/useUserPreferences";
-import { useState } from "react";
-import type { TimerSettings } from "@/context/UserPreferences";
-import { toast } from "sonner";
-import useTimer from "@/hooks/useTimer";
 
 const SettingsDialog = () => {
 	const {

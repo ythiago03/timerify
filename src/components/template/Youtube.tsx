@@ -1,3 +1,6 @@
+import { useEffect, useRef, useState } from "react";
+import { toast } from "sonner";
+
 import {
 	Pause,
 	Play,
@@ -6,18 +9,9 @@ import {
 	Volume2Icon,
 	SkipBackIcon,
 } from "lucide-react";
-import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import {
-	Popover,
-	PopoverClose,
-	PopoverContent,
-	PopoverTrigger,
-} from "../ui/popover";
-import { useEffect, useRef, useState } from "react";
 import { Slider } from "../ui/slider";
-import { toast } from "sonner";
 
 declare global {
 	interface Window {

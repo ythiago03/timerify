@@ -1,7 +1,8 @@
-import { useUserPreferences } from "@/hooks/useUserPreferences";
 import { createContext, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
-import { TimerSettings } from "./UserPreferences";
+
+import { useUserPreferences } from "@/hooks/useUserPreferences";
+import type { TimerSettings } from "./UserPreferences";
 
 interface ITimerContext {
 	timer: number;

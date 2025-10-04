@@ -1,9 +1,7 @@
-import Image from "next/image";
-import CardTheme from "../common/CardTheme";
-import { AspectRatio } from "../ui/aspect-ratio";
+import { useUserPreferences } from "@/hooks/useUserPreferences";
+
 import { Card } from "../ui/card";
 import { ScrollArea } from "../ui/scroll-area";
-import { useUserPreferences } from "@/hooks/useUserPreferences";
 
 const Themes = () => {
 	const allThemes = [

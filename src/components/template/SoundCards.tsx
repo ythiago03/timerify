@@ -1,15 +1,4 @@
 import CardSound from "../common/CardSound";
-import {
-	Bird,
-	CloudHail,
-	Coffee,
-	FlameKindling,
-	Mountain,
-	TentTree,
-	TrainFront,
-	TreePalm,
-	Waves,
-} from "lucide-react";
 
 const SoundCards: React.FC = () => {
 	return (
