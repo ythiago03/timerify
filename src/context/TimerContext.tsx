@@ -1,5 +1,7 @@
+import { useUserPreferences } from "@/hooks/useUserPreferences";
 import { createContext, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
+import { TimerSettings } from "./UserPreferences";
 
 interface ITimerContext {
 	timer: number;
@@ -10,37 +12,33 @@ interface ITimerContext {
 	pauseTimer: () => void;
 	resetTimer: () => void;
 	formatTime: (time: number) => string;
-	changeTimer: (time: number) => void;
 	changeCicle: (type: "focus" | "short" | "long") => void;
+	changeTimer: (timerSettings: TimerSettings) => void;
 }
 
 const initalContext = {
 	timer: 0,
 	isTimerRunning: false,
 	sessions: 0,
-	pomodoroType: "focus",
+	pomodoroType: "focus" as "focus" | "short" | "long",
 	startTimer: () => {},
 	pauseTimer: () => {},
 	resetTimer: () => {},
 	formatTime: (time: number) => "",
-	changeTimer: (time: number) => {},
 	changeCicle: (type: "focus" | "short" | "long") => {},
+	changeTimer: (timerSettings: TimerSettings) => {},
 };
 
 export const TimerContext = createContext<ITimerContext>(initalContext);
 
 export const TimerProvider = ({ children }: { children: React.ReactNode }) => {
-	const timersConfigRef = useRef({
-		focus: 25 * 60,
-		short: 5 * 60,
-		long: 15 * 60,
-	});
+	const { timerSettingsRef, updateTimerSettings } = useUserPreferences();
 	const pomodoroTypeRef = useRef<"focus" | "short" | "long">("focus");
 	const cicleRef = useRef<number>(1);
-	const timerRef = useRef<number>(timersConfigRef.current.focus);
+	const timerRef = useRef<number>((timerSettingsRef.current?.focus ?? 25) * 60);
 	const [sessions, setSessions] = useState<number>(0);
 
-	const [timer, setTimer] = useState<number>(timersConfigRef.current.focus);
+	const [timer, setTimer] = useState<number>(timerRef.current);
 	const [isTimerRunning, setIsTimerRunning] = useState<boolean>(false);
 	const [worker, setWorker] = useState<Worker | null>(null);
 	const [pomodoroType, setPomodoroType] = useState<"focus" | "short" | "long">(
@@ -59,11 +57,11 @@ export const TimerProvider = ({ children }: { children: React.ReactNode }) => {
 
 	const resetTimer = () => {
 		pauseTimer();
-		let timer = timersConfigRef.current.focus;
+		let timer = (timerSettingsRef.current?.focus ?? 25) * 60;
 		if (pomodoroTypeRef.current === "short")
-			timer = timersConfigRef.current.short;
+			timer = (timerSettingsRef.current?.short ?? 5) * 60;
 		if (pomodoroTypeRef.current === "long")
-			timer = timersConfigRef.current.long;
+			timer = (timerSettingsRef.current?.long ?? 15) * 60;
 
 		timerRef.current = timer;
 		setTimer(timer);
@@ -78,28 +76,23 @@ export const TimerProvider = ({ children }: { children: React.ReactNode }) => {
 		)}`;
 	};
 
-	const changeTimer = (time: number) => {
-		timersConfigRef.current.focus = time;
-		resetTimer();
-	};
-
 	const nextCicle = () => {
 		cicleRef.current++;
 
 		if (cicleRef.current % 8 === 0) {
 			pomodoroTypeRef.current = "long";
 			setPomodoroType("long");
-			setTimer(timersConfigRef.current.long);
+			setTimer((timerSettingsRef.current?.long ?? 15) * 60);
 			toast("Rest Time!");
 		} else if (cicleRef.current % 2 === 0) {
 			pomodoroTypeRef.current = "short";
 			setPomodoroType("short");
-			setTimer(timersConfigRef.current.short);
+			setTimer((timerSettingsRef.current?.short ?? 5) * 60);
 			toast("Rest Time!");
 		} else {
 			pomodoroTypeRef.current = "focus";
 			setPomodoroType("focus");
-			setTimer(timersConfigRef.current.focus);
+			setTimer((timerSettingsRef.current?.focus ?? 25) * 60);
 			toast("Focus Time!");
 			setSessions((prev) => prev + 1);
 		}
@@ -112,18 +105,23 @@ export const TimerProvider = ({ children }: { children: React.ReactNode }) => {
 			cicleRef.current = 1;
 			pomodoroTypeRef.current = "focus";
 			setPomodoroType("focus");
-			setTimer(timersConfigRef.current.focus);
+			setTimer((timerSettingsRef.current?.focus ?? 25) * 60);
 		} else if (type === "short") {
 			pomodoroTypeRef.current = "short";
 			setPomodoroType("short");
-			setTimer(timersConfigRef.current.short);
+			setTimer((timerSettingsRef.current?.short ?? 5) * 60);
 			cicleRef.current = 2;
 		} else if (type === "long") {
 			cicleRef.current = 8;
 			pomodoroTypeRef.current = "long";
 			setPomodoroType("long");
-			setTimer(timersConfigRef.current.long);
+			setTimer((timerSettingsRef.current?.long ?? 15) * 60);
 		}
+	};
+
+	const changeTimer = (timerSettings: TimerSettings) => {
+		updateTimerSettings(timerSettings);
+		resetTimer();
 	};
 
 	useEffect(() => {
@@ -186,8 +184,8 @@ export const TimerProvider = ({ children }: { children: React.ReactNode }) => {
 				pauseTimer,
 				resetTimer,
 				formatTime,
-				changeTimer,
 				changeCicle,
+				changeTimer,
 			}}
 		>
 			{children}

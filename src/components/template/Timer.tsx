@@ -1,6 +1,6 @@
 import useTimer from "@/hooks/useTimer";
 import { Pause, Play, RotateCcw } from "lucide-react";
-import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
+import { Tabs, TabsList, TabsTrigger } from "../ui/tabs";
 
 const Timer = () => {
 	const {
@@ -34,7 +34,7 @@ const Timer = () => {
 					<h2 className="text-5xl md:text-6xl font-bold text-ring">
 						{formatTime(timer)}
 					</h2>
-					<p className="text-lg">
+					<p className="text-lg text-muted-foreground">
 						{pomodoroType === "focus" && "Focus Time"}
 						{pomodoroType === "short" && "Short Break"}
 						{pomodoroType === "long" && "Long Break"}
@@ -70,7 +70,7 @@ const Timer = () => {
 			</div>
 
 			<div className="flex flex-col items-center">
-				<p>Sessions Completed</p>
+				<p className="text-muted-foreground">Sessions Completed</p>
 				<span className="text-2xl font-bold text-ring">{sessions}</span>
 			</div>
 		</section>
