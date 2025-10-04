@@ -1,10 +1,4 @@
-import {
-	CircleCheck,
-	CirclePlus,
-	PlusIcon,
-	Trash2,
-	Trash2Icon,
-} from "lucide-react";
+import { PlusIcon, Trash2Icon } from "lucide-react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { useState } from "react";
@@ -18,21 +12,16 @@ interface TaskInterface {
 
 const Tasks: React.FC = () => {
 	const [task, setTask] = useState<string>("");
-	const [isTaskSubmited, setIsTaskSubmited] = useState<boolean>(false);
 	const [taskError, setTaskError] = useState<string>("");
 	const [taskList, setTaskList] = useState<TaskInterface[]>([]);
-
-	const completedStyle = "text-foreground/30 line-through";
 
 	const addTask = (): void => {
 		if (task.length < 3) {
 			setTaskError("Task must be at least 3 characters long");
-			setIsTaskSubmited(true);
 			return;
 		}
 		if (taskList.length >= 10) {
 			setTaskError("You can't add more than 10 tasks");
-			setIsTaskSubmited(true);
 			return;
 		}
 		setTaskList((prevTaskList) => [
@@ -44,7 +33,7 @@ const Tasks: React.FC = () => {
 			},
 		]);
 		setTask("");
-		setIsTaskSubmited(false);
+		setTaskError("");
 	};
 
 	const handleRemoveTask = (id: string): void => {
@@ -67,21 +56,29 @@ const Tasks: React.FC = () => {
 	return (
 		<section className="w-full h-fit flex flex-col gap-10 bg-secondary/70 rounded-xl p-4 border-2 border-secondary">
 			<h2 className="text-2xl font-bold mt-5">Today's Tasks</h2>
-			<div className="flex gap-2 mb-6">
-				<Input
-					placeholder="Add a new task..."
-					value={task}
-					onChange={(e) => setTask(e.target.value)}
-					onKeyDown={(e) => e.key === "Enter" && addTask()}
-					className="flex-1"
-				/>
-				<Button
-					onClick={addTask}
-					size="icon"
-					className="bg-ring hover:bg-ring/50"
-				>
-					<PlusIcon className="size-4 text-foreground" />
-				</Button>
+			<div className="space-y-3 mb-6">
+				<div className="flex gap-2 ">
+					<Input
+						placeholder="Add a new task..."
+						value={task}
+						onChange={(e) => {
+							setTask(e.target.value);
+							setTaskError("");
+						}}
+						onKeyDown={(e) => e.key === "Enter" && addTask()}
+						className="flex-1"
+					/>
+					<Button
+						onClick={addTask}
+						size="icon"
+						className="bg-ring hover:bg-ring/50"
+					>
+						<PlusIcon className="size-4 text-foreground" />
+					</Button>
+				</div>
+				{taskError && (
+					<p className="ml-3 text-sm text-destructive">{taskError}</p>
+				)}
 			</div>
 
 			<div className="space-y-3">
@@ -101,26 +98,13 @@ const Tasks: React.FC = () => {
 							>
 								{task}
 							</div>
-							{/* <div className="flex items-center gap-2 mt-1">
-                <span className="text-xs text-muted-foreground">{task.pomodoros} pomodoros</span>
-                {!completed && (
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => incrementPomodoros(task.id)}
-                    className="h-6 px-2 text-xs"
-                  >
-                    +1
-                  </Button>
-                )}
-              </div> */}
 						</div>
 
 						<Button
 							variant="ghost"
 							size="icon"
 							onClick={() => handleRemoveTask(id)}
-							className="w-8 h-8 text-muted-foreground hover:text-destructive"
+							className="size-8 text-muted-foreground hover:text-destructive"
 						>
 							<Trash2Icon className="w-4 h-4" />
 						</Button>
