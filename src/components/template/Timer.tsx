@@ -24,11 +24,18 @@ const Timer = () => {
 				onValueChange={(value: string) =>
 					changeCicle(value as "focus" | "short" | "long")
 				}
+				className="w-11/12"
 			>
-				<TabsList className="bg-background/70">
-					<TabsTrigger value="focus">Focus Time</TabsTrigger>
-					<TabsTrigger value="short">Short Break</TabsTrigger>
-					<TabsTrigger value="long">Long Break</TabsTrigger>
+				<TabsList className="bg-accent/50 w-full">
+					<TabsTrigger className="grow" value="focus">
+						Focus Time
+					</TabsTrigger>
+					<TabsTrigger className="grow" value="short">
+						Short Break
+					</TabsTrigger>
+					<TabsTrigger className="grow" value="long">
+						Long Break
+					</TabsTrigger>
 				</TabsList>
 			</Tabs>
 			<div className="rounded-full size-64 flex items-center justify-center my-10 border-4 border-foreground/20">
