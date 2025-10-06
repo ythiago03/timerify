@@ -2,7 +2,7 @@ import { useUserPreferences } from "@/hooks/useUserPreferences";
 
 import { Card } from "../ui/card";
 import { ScrollArea } from "../ui/scroll-area";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 const Themes = () => {
 	const allThemes = [
@@ -57,7 +57,9 @@ const Themes = () => {
 	];
 	const { toggleTheme } = useUserPreferences();
 
-	const [currentTheme, setCurrentTheme] = useState("dark");
+	const [currentTheme, setCurrentTheme] = useState(
+		localStorage.getItem("currentTheme") || "dark",
+	);
 
 	return (
 		<ScrollArea className="h-72">
@@ -70,6 +72,7 @@ const Themes = () => {
 						}`}
 						onClick={() => {
 							toggleTheme(theme.name, theme.background);
+							localStorage.setItem("currentTheme", theme.name);
 							setCurrentTheme(theme.name);
 						}}
 					>

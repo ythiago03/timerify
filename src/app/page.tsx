@@ -13,8 +13,13 @@ import { TimerProvider } from "@/context/TimerContext";
 import AudioControl from "@/components/template/AudioControl";
 import { UserPreferencesProvider } from "@/context/UserPreferences";
 import BackgroundWrapper from "@/components/common/BackgroundWrapper";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+	useEffect(() => {
+		return localStorage.removeItem("currentTheme");
+	}, []);
+
 	return (
 		<GlobalAudioProvider>
 			<UserPreferencesProvider>
