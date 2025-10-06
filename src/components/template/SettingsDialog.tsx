@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { Save, SettingsIcon, TrashIcon } from "lucide-react";
+import {
+	Clock,
+	Palette,
+	Save,
+	SettingsIcon,
+	TrashIcon,
+	User,
+} from "lucide-react";
 
 import type { TimerSettings } from "@/context/UserPreferences";
 
@@ -40,18 +47,32 @@ const SettingsDialog = () => {
 	);
 	const [savedProfiles, setSavedProfiles] = useState(getSavedProfiles());
 	const [newProfileName, setNewProfileName] = useState("");
+	const [timerError, setTimerError] = useState("");
 
 	const handleTimerChange = (key: keyof TimerSettings, value: number) => {
+		setTimerError("");
+		if (Number.isNaN(value))
+			return setTimerError("Invalid value, please use only numbers");
 		const newTimerSettings = { ...timerSettings, [key]: value };
 		setTimerSettings(newTimerSettings);
 	};
 
 	const updateTimerSettings = () => {
+		for (const key in timerSettings) {
+			const value = timerSettings[key as keyof TimerSettings];
+			if (value === 0)
+				return setTimerError("All values must be greater than 0");
+			if (value > 60) return setTimerError("All values must be less than 60");
+		}
 		changeTimer(timerSettings);
 		toast.success("Timer settings updated!");
 	};
 
 	const saveProfile = () => {
+		if (getSavedProfiles().includes(newProfileName))
+			return toast.error("Profile already exists");
+		if (newProfileName.length < 3)
+			return toast.error("Profile name must be at least 3 characters long");
 		saveCurrentProfile(newProfileName);
 		setSavedProfiles(getSavedProfiles());
 		setNewProfileName("");
@@ -64,12 +85,12 @@ const SettingsDialog = () => {
 				<Button
 					variant="outline"
 					size="icon"
-					className="fixed top-4 right-4 z-50 bg-transparent"
+					className="fixed top-4 right-4 z-50 bg-transparent border-foreground/70"
 				>
-					<SettingsIcon className="w-5 h-5" />
+					<SettingsIcon className="size-5 text-foreground" />
 				</Button>
 			</DialogTrigger>
-			<DialogContent>
+			<DialogContent className="border-foreground/20 w-11/12">
 				<DialogHeader>
 					<DialogTitle>Settings & Profiles</DialogTitle>
 					<DialogDescription>
@@ -78,44 +99,59 @@ const SettingsDialog = () => {
 				</DialogHeader>
 
 				<Tabs defaultValue="timer" className="w-full">
-					<TabsList>
-						<TabsTrigger value="timer">Timer</TabsTrigger>
-						<TabsTrigger value="themes">Themes</TabsTrigger>
-						<TabsTrigger value="profiles">Profiles</TabsTrigger>
+					<TabsList className="w-full bg-accent/50">
+						<TabsTrigger className="w-full" value="timer">
+							<Clock className="mr-2 size-4" /> Timer
+						</TabsTrigger>
+						<TabsTrigger className="w-full" value="themes">
+							<Palette className="mr-2 size-4" /> Themes
+						</TabsTrigger>
+						<TabsTrigger className="w-full" value="profiles">
+							<User className="mr-2 size-4" /> Profiles
+						</TabsTrigger>
 					</TabsList>
 					<TabsContent value="timer" className="space-y-4 mt-4">
 						<div className="grid w-full items-center gap-3">
 							<Label htmlFor="focus">Work Duration (minutes)</Label>
 							<Input
-								type="number"
+								type="text"
+								maxLength={2}
 								id="focus"
 								value={timerSettings.focus}
 								placeholder="25"
 								onChange={(e) => handleTimerChange("focus", +e.target.value)}
+								className="border-foreground/20"
 							/>
 						</div>
 						<div className="grid w-full items-center gap-3">
 							<Label htmlFor="short">Short Break (minutes)</Label>
 							<Input
-								type="number"
+								type="text"
+								maxLength={2}
 								id="short"
 								value={timerSettings.short}
 								placeholder="5"
 								onChange={(e) => handleTimerChange("short", +e.target.value)}
+								className="border-foreground/20"
 							/>
 						</div>
 						<div className="grid w-full items-center gap-3">
 							<Label htmlFor="long">Long Break (minutes)</Label>
 							<Input
-								type="number"
+								type="text"
+								maxLength={2}
 								id="long"
 								value={timerSettings.long}
 								placeholder="15"
 								onChange={(e) => handleTimerChange("long", +e.target.value)}
+								className="border-foreground/20"
 							/>
 						</div>
+						{timerError !== "" && (
+							<p className="mt-3 text-sm text-destructive">{timerError}</p>
+						)}
 						<Button
-							className="w-full bg-ring text-foreground font-semibold hover:bg-ring/80"
+							className="w-full bg-ring text-accent-foreground font-semibold hover:bg-ring/80"
 							onClick={updateTimerSettings}
 						>
 							Apply Timer Settings
@@ -136,10 +172,12 @@ const SettingsDialog = () => {
 									placeholder="Profile name..."
 									value={newProfileName}
 									onChange={(e) => setNewProfileName(e.target.value)}
+									className="border-foreground/20"
 								/>
 								<Button
-									className="bg-ring text-foreground font-semibold hover:bg-ring/80"
+									className="bg-ring text-accent-foreground font-semibold hover:bg-ring/80"
 									onClick={saveProfile}
+									disabled={!newProfileName}
 								>
 									<Save /> Save
 								</Button>
@@ -152,7 +190,7 @@ const SettingsDialog = () => {
 							<h3 className="text-sm font-semibold mb-3">Saved Profiles</h3>
 							<div className="grid grid-cols-1 gap-3 ">
 								{savedProfiles.length === 0 && (
-									<Card className="p-6 text-center text-muted-foreground">
+									<Card className="p-6 text-center text-muted-foreground bg-accent/50 border-foreground/20">
 										<p>No saved profiles yet</p>
 										<p className="text-sm mt-1">
 											Create your first profile above
@@ -160,15 +198,21 @@ const SettingsDialog = () => {
 									</Card>
 								)}
 								{savedProfiles.map((profile: string) => (
-									<Card key={profile} className="p-4">
+									<Card
+										key={profile}
+										className="p-4 bg-accent/50 border-foreground/20"
+									>
 										<div className="flex items-center justify-between">
 											<div className="flex-1">
-												<h4 className="font-semibold">{profile}</h4>
+												<h4 className="font-semibold text-foreground">
+													{profile}
+												</h4>
 											</div>
 											<div className="flex gap-2">
 												<Button
 													variant="outline"
 													size="sm"
+													className="text-foreground hover:text-foreground border-foreground/20"
 													onClick={() => loadProfile(profile)}
 												>
 													Load
@@ -183,7 +227,7 @@ const SettingsDialog = () => {
 													}}
 													className="text-destructive hover:text-destructive"
 												>
-													<TrashIcon className="w-4 h-4" />
+													<TrashIcon className="size-4" />
 												</Button>
 											</div>
 										</div>

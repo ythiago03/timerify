@@ -18,14 +18,14 @@ const Timer = () => {
 	} = useTimer();
 
 	return (
-		<section className="w-full h-fit flex flex-col items-center gap-10 bg-secondary/70 rounded-xl p-4 border-2 border-secondary">
+		<section className="w-full h-fit flex flex-col items-center gap-10 bg-secondary/70 rounded-xl p-4 border border-foreground/20">
 			<Tabs
 				defaultValue="focus"
 				onValueChange={(value: string) =>
 					changeCicle(value as "focus" | "short" | "long")
 				}
 			>
-				<TabsList>
+				<TabsList className="bg-background/70">
 					<TabsTrigger value="focus">Focus Time</TabsTrigger>
 					<TabsTrigger value="short">Short Break</TabsTrigger>
 					<TabsTrigger value="long">Long Break</TabsTrigger>
@@ -51,7 +51,7 @@ const Timer = () => {
 						className="size-16 flex items-center justify-center bg-ring rounded-full"
 						onClick={pauseTimer}
 					>
-						<Pause className="size-6" />
+						<Pause className="size-6 text-accent-foreground" />
 					</button>
 				) : (
 					<button
@@ -59,7 +59,7 @@ const Timer = () => {
 						className="size-16 flex items-center justify-center bg-ring rounded-full"
 						onClick={startTimer}
 					>
-						<Play className="size-6" />
+						<Play className="size-6 text-accent-foreground" />
 					</button>
 				)}
 				<button

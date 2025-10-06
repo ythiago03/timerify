@@ -2,6 +2,7 @@ import { useUserPreferences } from "@/hooks/useUserPreferences";
 
 import { Card } from "../ui/card";
 import { ScrollArea } from "../ui/scroll-area";
+import { useState } from "react";
 
 const Themes = () => {
 	const allThemes = [
@@ -11,50 +12,52 @@ const Themes = () => {
 			coverPath: "/assets/theme-dark.png",
 			background: "",
 			primary: "#283ae2",
-			secondary: "#00000",
+			secondary: "#000000",
 		},
 		{
 			title: "Light",
 			name: "light",
 			coverPath: "/assets/theme-light.png",
 			background: "",
-			primary: "#283ae2",
-			secondary: "#00000",
+			primary: "#000000",
+			secondary: "#ffffff",
 		},
 		{
 			title: "Forest",
 			name: "forest",
 			coverPath: "/assets/theme-forest.png",
 			background: "url('/assets/background-forest.gif')",
-			primary: "#283ae2",
-			secondary: "#00000",
+			primary: "#E4F1AC",
+			secondary: "#111d13",
 		},
 		{
 			title: "Lofi",
 			name: "lofi",
 			coverPath: "/assets/theme-study.png",
 			background: "url('/assets/background-study.gif')",
-			primary: "#283ae2",
-			secondary: "#00000",
+			primary: "#D4BABC",
+			secondary: "#8D5E64",
 		},
 		{
 			title: "Coffee",
 			name: "coffee",
 			coverPath: "/assets/theme-coffee.png",
 			background: "url('/assets/background-coffee.gif')",
-			primary: "#283ae2",
-			secondary: "#00000",
+			primary: "#D4BEE4",
+			secondary: "#181934",
 		},
 		{
 			title: "Lain",
 			name: "lain",
 			coverPath: "/assets/theme-lain.png",
 			background: "url('/assets/background-lain.gif')",
-			primary: "#283ae2",
-			secondary: "#00000",
+			primary: "#9C7FBD",
+			secondary: "#120F1F",
 		},
 	];
 	const { toggleTheme } = useUserPreferences();
+
+	const [currentTheme, setCurrentTheme] = useState("dark");
 
 	return (
 		<ScrollArea className="h-72">
@@ -62,22 +65,26 @@ const Themes = () => {
 				{allThemes.map((theme) => (
 					<Card
 						key={theme.name}
-						// className={`p-4 cursor-pointer transition-all ${
-						//   localSettings.theme === theme.name ? "ring-2 ring-primary" : "hover:bg-accent/50"
-						// }`}
-						className="p-2 mx-1 cursor-pointer transition-all bg-accent hover:bg-accent/50"
-						onClick={() => toggleTheme(theme.name, theme.background)}
+						className={`p-2 mx-1 cursor-pointer transition-all border-foreground/20 bg-accent/50 hover:bg-accent  ${
+							currentTheme === theme.name ? "ring-2 ring-ring" : ""
+						}`}
+						onClick={() => {
+							toggleTheme(theme.name, theme.background);
+							setCurrentTheme(theme.name);
+						}}
 					>
 						<div className="flex items-center justify-between">
 							<div>
-								<h4 className="flex items-center font-semibold">
+								<h4 className="flex items-center font-semibold text-foreground">
 									{theme.title}
 									<div className="flex gap-2 ml-2">
 										<span
-											className={`block size-4 rounded-full border-2 border-foreground bg-[${theme.primary}]`}
+											className="block size-4 rounded-full border border-foreground"
+											style={{ backgroundColor: theme.primary }}
 										/>
 										<span
-											className={`block size-4 rounded-full border-2 border-foreground bg-[${theme.secondary}]`}
+											className="block size-4 rounded-full border border-foreground"
+											style={{ backgroundColor: theme.secondary }}
 										/>
 									</div>
 								</h4>

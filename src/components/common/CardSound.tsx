@@ -70,7 +70,7 @@ const CardSound: React.FC<CardSoundProps> = ({ icon, soundName, color }) => {
 			<button
 				type="button"
 				onClick={toggleSound}
-				className={`${isPlaying ? color : "bg-transparent"} w-full flex justify-between border-2 border-foreground/20 rounded-xl p-4`}
+				className={`${isPlaying ? color : "bg-transparent"} w-full flex justify-between border border-foreground/20 rounded-xl p-4`}
 			>
 				<div className="flex gap-2">
 					<span className="text-3xl">{icon}</span>

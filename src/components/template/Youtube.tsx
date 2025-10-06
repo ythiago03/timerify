@@ -144,12 +144,17 @@ const Youtube: React.FC<{ className?: string }> = ({ className = "" }) => {
 			<div className="flex items-center gap-2 my-3">
 				<Input
 					type="text"
-					className="bg-transparent border-2  border-secondary"
+					className="bg-transparent border border-foreground/20"
 					placeholder="Paste Youtube URL here"
 					value={videoUrl}
 					onChange={(e) => setVideoUrl(e.target.value)}
 				/>
-				<Button variant="outline" disabled={!videoUrl} onClick={addVideo}>
+				<Button
+					variant="outline"
+					disabled={!videoUrl}
+					onClick={addVideo}
+					className="hover:text-foreground border-foreground/20"
+				>
 					<Plus /> Add
 				</Button>
 			</div>

@@ -55,7 +55,7 @@ const Tasks: React.FC = () => {
 	};
 
 	return (
-		<section className="w-full h-fit flex flex-col gap-10 bg-secondary/70 rounded-xl p-4 border-2 border-secondary">
+		<section className="w-full h-fit flex flex-col gap-10 bg-secondary/70 rounded-xl p-4 border border-foreground/20">
 			<h2 className="text-2xl font-bold mt-5">Today's Tasks</h2>
 			<div className="space-y-3 mb-6">
 				<div className="flex gap-2 ">
@@ -67,14 +67,14 @@ const Tasks: React.FC = () => {
 							setTaskError("");
 						}}
 						onKeyDown={(e) => e.key === "Enter" && addTask()}
-						className="flex-1"
+						className="flex-1 border-foreground/20"
 					/>
 					<Button
 						onClick={addTask}
 						size="icon"
 						className="bg-ring hover:bg-ring/50"
 					>
-						<PlusIcon className="size-4 text-foreground" />
+						<PlusIcon className="size-4 text-accent-foreground" />
 					</Button>
 				</div>
 				{taskError && (
@@ -86,7 +86,7 @@ const Tasks: React.FC = () => {
 				{taskList.map(({ id, task, completed }) => (
 					<div
 						key={id}
-						className={`flex items-center gap-3 p-3 rounded-lg border ${completed ? "bg-muted/50" : "bg-card"}`}
+						className={`flex items-center gap-3 p-3 rounded-lg border border-foreground/20 ${completed ? "bg-background/50" : "bg-transparent"}`}
 					>
 						<Checkbox
 							checked={completed}
