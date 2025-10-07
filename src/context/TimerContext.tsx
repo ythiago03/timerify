@@ -174,6 +174,16 @@ export const TimerProvider = ({ children }: { children: React.ReactNode }) => {
 		};
 	}, []);
 
+	useEffect(() => {
+		changeTimer(
+			timerSettingsRef.current ?? {
+				focus: 25,
+				short: 5,
+				long: 15,
+			},
+		);
+	}, [timerSettingsRef.current]);
+
 	return (
 		<TimerContext.Provider
 			value={{
