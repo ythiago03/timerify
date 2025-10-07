@@ -89,6 +89,7 @@ export const UserPreferencesProvider = ({
 	};
 
 	const getSavedProfiles = (): string[] => {
+		if (typeof window === "undefined") return [];
 		const profiles = Object.keys(localStorage);
 		const filteredProfiles = profiles.filter(
 			(profile) =>
