@@ -95,7 +95,8 @@ export const UserPreferencesProvider = ({
 			(profile) =>
 				profile !== "theme" &&
 				profile !== "ally-supports-cache" &&
-				profile !== "currentTheme",
+				profile !== "currentTheme" &&
+				profile !== "__NEXT_DISMISS_PRERENDER_INDICATOR",
 		);
 		return filteredProfiles;
 	};
