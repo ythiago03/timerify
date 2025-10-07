@@ -36,9 +36,9 @@ select:-webkit-autofill:focus {
 		--secondary: 240 4.8% 95.9%;
 		--secondary-foreground: 240 5.9% 10%;
 		--muted: 240 4.8% 95.9%;
-		--muted-foreground: 240 3.8% 46.1%;
+		--muted-foreground: 232 17% 35%;
 		--accent: 240 4.8% 95.9%;
-		--accent-foreground: 240 5.9% 10%;
+		--accent-foreground: 0 0% 100%;
 		--destructive: 0 84.2% 60.2%;
 		--destructive-foreground: 0 0% 98%;
 		--border: 240 5.9% 90%;
@@ -70,7 +70,7 @@ select:-webkit-autofill:focus {
 		--destructive-foreground: 0 0% 98%;
 		--border: 240 3.7% 15.9%;
 		--input: 240 3.7% 15.9%;
-		--ring: 240 4.9% 83.9%;
+		--ring: 234 76% 52%;
 		--chart-1: 220 70% 50%;
 		--chart-2: 160 60% 45%;
 		--chart-3: 30 80% 55%;
@@ -87,17 +87,17 @@ select:-webkit-autofill:focus {
 		--popover-foreground: 71 71% 81%;
 		--primary: 71 71% 81%;
 		--primary-foreground: 240 5.9% 10%;
-		--secondary: 240 3.7% 15.9%;
+		--secondary: 130 26% 9%;
 		--secondary-foreground: 0 0% 98%;
 		--muted: 240 3.7% 15.9%;
-		--muted-foreground: 240 5% 64.9%;
-		--accent: 240 3.7% 15.9%;
-		--accent-foreground: 0 0% 98%;
+		--muted-foreground: 82 20% 62%;
+		--accent: 130 26% 9%;
+		--accent-foreground: 130 26% 9%;
 		--destructive: 0 62.8% 30.6%;
 		--destructive-foreground: 0 0% 98%;
 		--border: 240 3.7% 15.9%;
 		--input: 240 3.7% 15.9%;
-		--ring: 240 4.9% 83.9%;
+		--ring: 71 71% 81%;
 		--chart-1: 220 70% 50%;
 		--chart-2: 160 60% 45%;
 		--chart-3: 30 80% 55%;
@@ -106,25 +106,25 @@ select:-webkit-autofill:focus {
 	}
 
 	.lofi {
-		--background: 272 47% 22%;
-		--foreground: 275 41% 82%;
+		--background: 352 20% 46%;
+		--foreground: 355 23% 78%;
 		--card: 0 0% 100%;
 		--card-foreground: 240 10% 3.9%;
 		--popover: 0 0% 100%;
 		--popover-foreground: 240 10% 3.9%;
 		--primary: 275 41% 82%;
 		--primary-foreground: 0 0% 98%;
-		--secondary: 240 4.8% 95.9%;
+		--secondary: 352 20% 46%;
 		--secondary-foreground: 240 5.9% 10%;
 		--muted: 240 4.8% 95.9%;
-		--muted-foreground: 240 3.8% 46.1%;
-		--accent: 240 4.8% 95.9%;
-		--accent-foreground: 240 5.9% 10%;
+		--muted-foreground: 355, 23%, 78%;
+		--accent: 353 29% 36%;
+		--accent-foreground: 353 29% 36%;
 		--destructive: 0 84.2% 60.2%;
 		--destructive-foreground: 0 0% 98%;
 		--border: 240 5.9% 90%;
 		--input: 240 5.9% 90%;
-		--ring: 240 10% 3.9%;
+		--ring: 355 23% 78%;
 		--chart-1: 12 76% 61%;
 		--chart-2: 173 58% 39%;
 		--chart-3: 197 37% 24%;
@@ -134,7 +134,7 @@ select:-webkit-autofill:focus {
 	}
 
 	.coffee {
-		--background: 272 47% 22%;
+		--background: 238 36% 15%;
 		--foreground: 275 41% 82%;
 		--card: 0 0% 100%;
 		--card-foreground: 240 10% 3.9%;
@@ -142,17 +142,17 @@ select:-webkit-autofill:focus {
 		--popover-foreground: 240 10% 3.9%;
 		--primary: 275 41% 82%;
 		--primary-foreground: 0 0% 98%;
-		--secondary: 240 4.8% 95.9%;
+		--secondary: 238 36% 15%;
 		--secondary-foreground: 240 5.9% 10%;
-		--muted: 240 4.8% 95.9%;
-		--muted-foreground: 240 3.8% 46.1%;
-		--accent: 240 4.8% 95.9%;
+		--muted: 249 100% 85%;
+		--muted-foreground: 249 100% 85%;
+		--accent: 276 16% 41%;
 		--accent-foreground: 240 5.9% 10%;
 		--destructive: 0 84.2% 60.2%;
 		--destructive-foreground: 0 0% 98%;
 		--border: 240 5.9% 90%;
 		--input: 240 5.9% 90%;
-		--ring: 240 10% 3.9%;
+		--ring: 275 41% 82%;
 		--chart-1: 12 76% 61%;
 		--chart-2: 173 58% 39%;
 		--chart-3: 197 37% 24%;
@@ -162,25 +162,25 @@ select:-webkit-autofill:focus {
 	}
 
 	.lain {
-		--background: 234 41% 30%;
-		--foreground: 229 41% 63%;
+		--background: 252 33% 9%;
+		--foreground: 268 32% 62%;
 		--card: 0 0% 100%;
 		--card-foreground: 240 10% 3.9%;
 		--popover: 0 0% 100%;
 		--popover-foreground: 240 10% 3.9%;
-		--primary: 229 41% 63%;
+		--primary: 275 41% 82%;
 		--primary-foreground: 0 0% 98%;
-		--secondary: 240 4.8% 95.9%;
+		--secondary: 238 36% 15%;
 		--secondary-foreground: 240 5.9% 10%;
-		--muted: 240 4.8% 95.9%;
-		--muted-foreground: 240 3.8% 46.1%;
-		--accent: 240 4.8% 95.9%;
+		--muted: 249 100% 85%;
+		--muted-foreground: 249 100% 85%;
+		--accent: 276 16% 41%;
 		--accent-foreground: 240 5.9% 10%;
 		--destructive: 0 84.2% 60.2%;
 		--destructive-foreground: 0 0% 98%;
 		--border: 240 5.9% 90%;
 		--input: 240 5.9% 90%;
-		--ring: 240 10% 3.9%;
+		--ring: 268 32% 62%;
 		--chart-1: 12 76% 61%;
 		--chart-2: 173 58% 39%;
 		--chart-3: 197 37% 24%;

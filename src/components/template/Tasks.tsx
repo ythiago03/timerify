@@ -1,31 +1,28 @@
-import { CircleCheck, CirclePlus, Trash2 } from "lucide-react";
+import { useState } from "react";
+import { PlusIcon, Trash2Icon } from "lucide-react";
+
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import { useState } from "react";
+import { Checkbox } from "../ui/checkbox";
 
 interface TaskInterface {
 	id: string;
 	task: string;
-	status: "completed" | "incomplete";
+	completed: boolean;
 }
 
 const Tasks: React.FC = () => {
 	const [task, setTask] = useState<string>("");
-	const [isTaskSubmited, setIsTaskSubmited] = useState<boolean>(false);
 	const [taskError, setTaskError] = useState<string>("");
 	const [taskList, setTaskList] = useState<TaskInterface[]>([]);
-
-	const completedStyle = "text-foreground/30 line-through";
 
 	const addTask = (): void => {
 		if (task.length < 3) {
 			setTaskError("Task must be at least 3 characters long");
-			setIsTaskSubmited(true);
 			return;
 		}
 		if (taskList.length >= 10) {
 			setTaskError("You can't add more than 10 tasks");
-			setIsTaskSubmited(true);
 			return;
 		}
 		setTaskList((prevTaskList) => [
@@ -33,11 +30,11 @@ const Tasks: React.FC = () => {
 			{
 				id: crypto.randomUUID(),
 				task,
-				status: "incomplete",
+				completed: false,
 			},
 		]);
 		setTask("");
-		setIsTaskSubmited(false);
+		setTaskError("");
 	};
 
 	const handleRemoveTask = (id: string): void => {
@@ -50,7 +47,7 @@ const Tasks: React.FC = () => {
 			task.id === id
 				? {
 						...task,
-						status: task.status === "incomplete" ? "completed" : "incomplete",
+						completed: !task.completed,
 					}
 				: task,
 		);
@@ -58,59 +55,69 @@ const Tasks: React.FC = () => {
 	};
 
 	return (
-		<div className="flex flex-col w-full max-w-sm">
-			<form
-				onSubmit={(e) => e.preventDefault()}
-				className="flex w-full mt-3 max-w-sm items-center gap-1.5 bg-foreground/15 rounded-lg"
-			>
-				<Input
-					value={task}
-					onChange={(e) => setTask(e.target.value)}
-					className="bg-transparent border-0 py-6 focus-visible:ring-0"
-					type="text"
-					id="text"
-					placeholder="Do homework..."
-				/>
-				<Button
-					onClick={addTask}
-					className="shadow-none bg-transparent hover:bg-transparent [&_svg]:size-7"
-				>
-					<CirclePlus className="text-green-500" />
-				</Button>
-			</form>
-			{isTaskSubmited && (
-				<span className="text-xs text-destructive p-3">{taskError}</span>
-			)}
+		<section className="w-full h-fit flex flex-col gap-10 bg-secondary/70 rounded-xl p-4 border border-foreground/20">
+			<h2 className="text-2xl font-bold mt-5">Today's Tasks</h2>
+			<div className="space-y-3 mb-6">
+				<div className="flex gap-2 ">
+					<Input
+						placeholder="Add a new task..."
+						value={task}
+						onChange={(e) => {
+							setTask(e.target.value);
+							setTaskError("");
+						}}
+						onKeyDown={(e) => e.key === "Enter" && addTask()}
+						className="flex-1 border-foreground/20"
+					/>
+					<Button
+						onClick={addTask}
+						size="icon"
+						className="bg-ring hover:bg-ring/50"
+					>
+						<PlusIcon className="size-4 text-accent-foreground" />
+					</Button>
+				</div>
+				{taskError && (
+					<p className="ml-3 text-sm text-destructive">{taskError}</p>
+				)}
+			</div>
 
-			<div className="pt-10 w-full max-w-sm">
-				{taskList.map(({ id, task, status }) => (
+			<div className="space-y-3">
+				{taskList.map(({ id, task, completed }) => (
 					<div
 						key={id}
-						className="flex w-full mt-3 max-w-sm items-center gap-1.5 bg-foreground/15 rounded-lg"
+						className={`flex items-center gap-3 p-3 rounded-lg border border-foreground/20 ${completed ? "bg-background/50" : "bg-transparent"}`}
 					>
-						<span
-							className={`${
-								status === "completed" ? completedStyle : ""
-							} p-3 mr-auto`}
-						>
-							{task}
-						</span>
+						<Checkbox
+							checked={completed}
+							onCheckedChange={() => toggleTaskStatus(id)}
+						/>
+
+						<div className="flex-1">
+							<div
+								className={`${completed ? "line-through text-muted-foreground" : ""}`}
+							>
+								{task}
+							</div>
+						</div>
+
 						<Button
-							onClick={() => toggleTaskStatus(id)}
-							className="px-0 shadow-none bg-transparent hover:bg-transparent [&_svg]:size-7"
-						>
-							<CircleCheck className="text-green-500" />
-						</Button>
-						<Button
+							variant="ghost"
+							size="icon"
 							onClick={() => handleRemoveTask(id)}
-							className="px-0 mx-3 shadow-none bg-transparent hover:bg-transparent [&_svg]:size-7"
+							className="size-8 text-muted-foreground hover:text-destructive"
 						>
-							<Trash2 className="text-red-500" />
+							<Trash2Icon className="w-4 h-4" />
 						</Button>
 					</div>
 				))}
 			</div>
-		</div>
+			{taskList.length === 0 && (
+				<div className="text-center py-8 text-muted-foreground">
+					No tasks yet. Add one above to get started!
+				</div>
+			)}
+		</section>
 	);
 };
 

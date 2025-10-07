@@ -1,56 +1,71 @@
 import { createContext, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
+import { useUserPreferences } from "@/hooks/useUserPreferences";
+import type { TimerSettings } from "./UserPreferences";
+
 interface ITimerContext {
 	timer: number;
 	isTimerRunning: boolean;
+	sessions: number;
+	pomodoroType: "focus" | "short" | "long";
 	startTimer: () => void;
 	pauseTimer: () => void;
 	resetTimer: () => void;
 	formatTime: (time: number) => string;
-	changeTimer: (time: number) => void;
+	changeCicle: (type: "focus" | "short" | "long") => void;
+	changeTimer: (timerSettings: TimerSettings) => void;
 }
 
 const initalContext = {
 	timer: 0,
 	isTimerRunning: false,
+	sessions: 0,
+	pomodoroType: "focus" as "focus" | "short" | "long",
 	startTimer: () => {},
 	pauseTimer: () => {},
 	resetTimer: () => {},
 	formatTime: (time: number) => "",
-	changeTimer: (time: number) => {},
+	changeCicle: (type: "focus" | "short" | "long") => {},
+	changeTimer: (timerSettings: TimerSettings) => {},
 };
 
 export const TimerContext = createContext<ITimerContext>(initalContext);
 
 export const TimerProvider = ({ children }: { children: React.ReactNode }) => {
-	const defaultTimerRef = useRef<number>(1500);
-	const isRestRef = useRef<boolean>(true);
-	const timerRef = useRef<number>(defaultTimerRef.current);
+	const { timerSettingsRef, updateTimerSettings } = useUserPreferences();
+	const pomodoroTypeRef = useRef<"focus" | "short" | "long">("focus");
+	const cicleRef = useRef<number>(1);
+	const timerRef = useRef<number>((timerSettingsRef.current?.focus ?? 25) * 60);
+	const [sessions, setSessions] = useState<number>(0);
 
-	const [timer, setTimer] = useState<number>(defaultTimerRef.current);
+	const [timer, setTimer] = useState<number>(timerRef.current);
 	const [isTimerRunning, setIsTimerRunning] = useState<boolean>(false);
 	const [worker, setWorker] = useState<Worker | null>(null);
+	const [pomodoroType, setPomodoroType] = useState<"focus" | "short" | "long">(
+		"focus",
+	);
 
 	const startTimer = () => {
-		const btnClickAudio = new Audio("/sounds/button-click.mp3");
-		btnClickAudio.play();
 		worker?.postMessage({ type: "START" });
 		setIsTimerRunning(true);
 	};
 
 	const pauseTimer = () => {
-		const btnClickAudio = new Audio("/sounds/button-click.mp3");
-		btnClickAudio.play();
 		worker?.postMessage({ type: "STOP" });
 		setIsTimerRunning(false);
 	};
 
 	const resetTimer = () => {
 		pauseTimer();
-		isRestRef.current = true;
-		timerRef.current = defaultTimerRef.current;
-		setTimer(defaultTimerRef.current);
+		let timer = (timerSettingsRef.current?.focus ?? 25) * 60;
+		if (pomodoroTypeRef.current === "short")
+			timer = (timerSettingsRef.current?.short ?? 5) * 60;
+		if (pomodoroTypeRef.current === "long")
+			timer = (timerSettingsRef.current?.long ?? 15) * 60;
+
+		timerRef.current = timer;
+		setTimer(timer);
 	};
 
 	const formatTime = (time: number) => {
@@ -62,8 +77,51 @@ export const TimerProvider = ({ children }: { children: React.ReactNode }) => {
 		)}`;
 	};
 
-	const changeTimer = (time: number) => {
-		defaultTimerRef.current = time;
+	const nextCicle = () => {
+		cicleRef.current++;
+
+		if (cicleRef.current % 8 === 0) {
+			pomodoroTypeRef.current = "long";
+			setPomodoroType("long");
+			setTimer((timerSettingsRef.current?.long ?? 15) * 60);
+			toast("Rest Time!");
+		} else if (cicleRef.current % 2 === 0) {
+			pomodoroTypeRef.current = "short";
+			setPomodoroType("short");
+			setTimer((timerSettingsRef.current?.short ?? 5) * 60);
+			toast("Rest Time!");
+		} else {
+			pomodoroTypeRef.current = "focus";
+			setPomodoroType("focus");
+			setTimer((timerSettingsRef.current?.focus ?? 25) * 60);
+			toast("Focus Time!");
+			setSessions((prev) => prev + 1);
+		}
+	};
+
+	const changeCicle = (type: "focus" | "short" | "long") => {
+		pauseTimer();
+
+		if (type === "focus") {
+			cicleRef.current = 1;
+			pomodoroTypeRef.current = "focus";
+			setPomodoroType("focus");
+			setTimer((timerSettingsRef.current?.focus ?? 25) * 60);
+		} else if (type === "short") {
+			pomodoroTypeRef.current = "short";
+			setPomodoroType("short");
+			setTimer((timerSettingsRef.current?.short ?? 5) * 60);
+			cicleRef.current = 2;
+		} else if (type === "long") {
+			cicleRef.current = 8;
+			pomodoroTypeRef.current = "long";
+			setPomodoroType("long");
+			setTimer((timerSettingsRef.current?.long ?? 15) * 60);
+		}
+	};
+
+	const changeTimer = (timerSettings: TimerSettings) => {
+		updateTimerSettings(timerSettings);
 		resetTimer();
 	};
 
@@ -97,22 +155,7 @@ export const TimerProvider = ({ children }: { children: React.ReactNode }) => {
 					timerWorker.postMessage({ type: "STOP" });
 					setIsTimerRunning(false);
 
-					if (isRestRef.current) {
-						// Transição para período de descanso
-						isRestRef.current = false;
-						const restTime = 5 * 60; // 5 minutos em segundos
-						timerRef.current = restTime;
-						setTimer(restTime);
-						toast("Rest Time!");
-						return;
-					}
-
-					// Transição para período de trabalho
-					isRestRef.current = true;
-					timerRef.current = defaultTimerRef.current;
-					setTimer(defaultTimerRef.current);
-					toast("Work Time!");
-					return;
+					nextCicle();
 				}
 				setTimer((prevTime) => {
 					timerRef.current = prevTime - 1;
@@ -129,17 +172,30 @@ export const TimerProvider = ({ children }: { children: React.ReactNode }) => {
 			timerWorker.terminate();
 			URL.revokeObjectURL(workerUrl);
 		};
-	}, [defaultTimerRef]);
+	}, []);
+
+	useEffect(() => {
+		changeTimer(
+			timerSettingsRef.current ?? {
+				focus: 25,
+				short: 5,
+				long: 15,
+			},
+		);
+	}, [timerSettingsRef.current]);
 
 	return (
 		<TimerContext.Provider
 			value={{
 				timer,
 				isTimerRunning,
+				sessions,
+				pomodoroType,
 				startTimer,
 				pauseTimer,
 				resetTimer,
 				formatTime,
+				changeCicle,
 				changeTimer,
 			}}
 		>

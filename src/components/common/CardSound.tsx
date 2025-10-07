@@ -1,15 +1,17 @@
-import { type ElementType, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { useGlobalAudio } from "@/context/GlobalAudioContext";
 
 import { Slider } from "../ui/slider";
+import { Pause, Play } from "lucide-react";
 
 interface CardSoundProps {
-	icon: ElementType;
+	icon: string;
 	soundName: string;
+	color: string;
 }
 
-const CardSound: React.FC<CardSoundProps> = ({ icon: Icon, soundName }) => {
+const CardSound: React.FC<CardSoundProps> = ({ icon, soundName, color }) => {
 	const [isPlaying, setIsPlaying] = useState<boolean>(false);
 	const { addAudio } = useGlobalAudio();
 
@@ -46,6 +48,15 @@ const CardSound: React.FC<CardSoundProps> = ({ icon: Icon, soundName }) => {
 		}
 	};
 
+	const transformCaptalizedCase = (text: string): string => {
+		if (text === "") return "";
+		const words = text.split(" ");
+		const captalizedText = words.map((word): string => {
+			return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+		});
+		return captalizedText.join(" ");
+	};
+
 	const handleVolumeChange = (volume: number[]) => {
 		const sound = soundRef.current;
 		if (!sound) return;
@@ -54,24 +65,30 @@ const CardSound: React.FC<CardSoundProps> = ({ icon: Icon, soundName }) => {
 		sound.volume = volumeRef.current;
 	};
 
-	const conditionalStyle = isPlaying ? "bg-foreground/15 backdrop-blur-sm" : "";
-
 	return (
-		<div className="relative">
+		<div className="w-full flex flex-col gap-2">
 			<button
 				type="button"
 				onClick={toggleSound}
-				className={`${conditionalStyle} hover:bg-foreground/15  hover:backdrop-blur-sm w-32 h-32 flex flex-col justify-center items-center cursor-pointer rounded-lg`}
+				className={`${isPlaying ? color : "bg-transparent"} w-full flex justify-between border border-foreground/20 rounded-xl p-4`}
 			>
-				<Icon className="w-16 h-16" />
+				<div className="flex gap-2">
+					<span className="text-3xl">{icon}</span>
+					<p className="my-auto">{transformCaptalizedCase(soundName)}</p>
+				</div>
+				{isPlaying ? (
+					<Pause className="size-4 my-auto" />
+				) : (
+					<Play className="size-4 my-auto" />
+				)}
 			</button>
 			{isPlaying && (
 				<Slider
 					onValueChange={handleVolumeChange}
-					defaultValue={[50]}
+					defaultValue={[(soundRef.current?.volume ?? 0) * 100]}
 					max={100}
 					step={1}
-					className="w-full mt-auto absolute bottom-0 cursor-pointer"
+					className="w-full px-2 cursor-pointer"
 				/>
 			)}
 		</div>

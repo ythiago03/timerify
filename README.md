@@ -1,129 +1,142 @@
 <div align="center">
-  <img src="/public/assets/theme-forest.png" alt="Timerify Banner" width="100%" />
 
-  <h1>Timerify</h1>
+![Forest Theme](./public//assets/theme-forest.png)
+
+# Timerify
   
-  <p>
-    <strong>Maximize sua produtividade com um pomodoro personalizável e ambiente sonoro imersivo 🎯</strong>
-  </p>
+**Maximize your productivity with a customizable pomodoro and immersive sound environment 🎯**  
 
-  <p>
-    <a href="https://timerify.vercel.app/">Ver Demo</a>
-    ·
-    <a href="https://github.com/ythiago03/timerify/issues">Reportar Bug</a>
-    ·
-    <a href="https://github.com/ythiago03/timerify/issues">Sugerir Feature</a>
-  </p>
+  [View Demo](https://timerify.thiagof.com/) ·  [Report Bug](https://github.com/ythiago03/timerify/issues) ·  [Suggest Feature](https://github.com/ythiago03/timerify/issues)
+
 </div>
 
-## 📋 Sobre o Projeto
+## 📋 About the Project
 
-Timerify é uma aplicação web de pomodoro projetada para aumentar sua produtividade durante estudos, trabalho ou qualquer outra atividade que exija foco. Com uma interface intuitiva e recursos personalizáveis, o Timerify oferece uma experiência única para gerenciar seu tempo de forma eficiente.
+Timerify is a pomodoro web application designed to increase your productivity during studies, work, or any other activity that requires focus. With an intuitive interface and customizable features, Timerify offers a unique experience to manage your time efficiently.
 
-## ✨ Funcionalidades
+## ✨ Features
 
-### ⏰ Timer Pomodoro Personalizável
+### ⏰ Customizable Pomodoro Timer
+
 ![Timer Pomodoro Demo](./public/gifs/timer-demo.gif)
-- Timer padrão: 25 minutos de foco e 5 minutos de pausa
-- Interface intuitiva e minimalista
-- Alertas sonoros suaves para início e fim de cada sessão
-- Personalize o tempo de foco conforme sua necessidade
 
-### 📝 Gerenciador de Tarefas Integrado
+- Default timer: 25 minutes of focus. 5 min of break and 15 min long break
+- Intuitive and minimalist interface
+- Soft sound alerts for the start and end of each session
+- Customize each time according to your needs
+
+### 📝 Integrated Task Manager
+
 ![Todo List Demo](./public/gifs/todo-demo.gif)
-- Crie e organize suas tarefas para cada sessão
-- Marque tarefas como concluídas
-- Mantenha o foco nos objetivos importantes
 
-### 🎵 Ambiente Sonoro Imersivo
+- Create and organize your tasks for each session
+- Mark tasks as completed
+- Stay focused on important goals
+
+### 🎵 Immersive Sound Environment
+
 ![Ambient Sounds Demo](./public/gifs/sounds-demo.gif)
-- Sons ambientes relaxantes:
-  - Chuva suave
-  - Ondas do mar
-  - Crepitar de fogueira
-  - Sons da floresta
-  - Ambiente de café
-  - Entre outros
-- Controle individual de volume para cada som
-- Controle global de volume
-- Misture diferentes sons para criar seu ambiente perfeito
 
-### 🎬 Integração com YouTube
+- Relaxing ambient sounds:
+  - Gentle rain
+  - Ocean waves
+  - Crackling fire
+  - Forest sounds
+  - Coffee shop atmosphere
+  - Among others
+- Individual volume control for each sound
+- Mix different sounds to create your perfect environment
+
+### 🎬 YouTube Integration
+
 ![YouTube Integration Demo](./public/gifs/youtube-demo.gif)
-- Adicione qualquer vídeo ou playlist do YouTube
-- Perfeito para músicas lo-fi, playlists de estudo ou sons ambientes
-- Controle de volume independente
-- Continue ouvindo mesmo ao minimizar a janela
 
-### 🎨 Temas Personalizados
+- Add any YouTube video or playlist
+- Perfect for lo-fi music, study playlists, or ambient sounds
+- Independent volume control
+- Continue listening even when minimizing the window
+
+### 🎨 Custom Themes
+
 ![Themes Demo](./public/gifs/themes-demo.gif)
-- Diversos temas disponíveis:
+
+- Various themes available:
   - Light
   - Dark
   - Forest
   - Lo-fi
-  - Entre outros
-- Adapte a interface ao seu gosto e ambiente
+  - Among others
+- Adapt the interface to your taste and environment
 
-## 🚀 Tecnologias Utilizadas
+### 👤 Custom Profiles
 
-- [Next.js](https://nextjs.org/) - Framework React para produção
-- [Tailwind CSS](https://tailwindcss.com/) - Framework CSS utilitário
-- [YouTube IFrame API](https://developers.google.com/youtube/iframe_api_reference) - API para integração com YouTube
-- [Shadcn/ui](https://ui.shadcn.com/) - Biblioteca de componentes
+![Profiles Demo](./public/gifs/profile-demo.gif)
 
-## 🎵 Créditos dos Áudios
+- Customize the pomodoro timer, theme and save it in a profile
 
-| Som Ambiente | Link Original | Autor |
+## 📝 Future Improvements
+
+Features that I plan to implement:
+
+- More Languages
+- Save your created YouTube playlists
+- Ranking of pomodoro hours completed
+- Ranking of pomodoro sessions completed (in total)
+- Ranking of tasks completed
+
+## 🚀 Technologies Used
+
+- [Next.js](https://nextjs.org/) - React framework for production
+- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
+- [YouTube IFrame API](https://developers.google.com/youtube/iframe_api_reference) - API for YouTube integration
+- [Shadcn/ui](https://ui.shadcn.com/) - Component library
+
+## 🎵 Audio Credits
+
+| Ambient Sound | Original Link | Author |
 |--------------|---------------|--------|
-| Night Ambience | [Link para o áudio original](https://pixabay.com/sound-effects/night-ambience-with-cricket-sound-271304/) | TanwerAman |
-| Crackling Fire | [Link para o áudio original](https://pixabay.com/sound-effects/campfire-crackling-fireplace-sound-119594/) | SoundsForYou |
-| Sandy Beach | [Link para o áudio original](https://pixabay.com/sound-effects/sandy-beach-calm-waves-water-nature-sounds-8052/) | juliusH |
-| Rain Ambience | [Link para o áudio original](https://pixabay.com/sound-effects/calming-rain-257596/) | Liecio | 
-| Coffee Shop Ambience | [Link para o áudio original](https://pixabay.com/sound-effects/ambience-coffee-shop-4-17028/) | freesound_community |
-| Dripping Water in Cave | [Link para o áudio original](https://pixabay.com/sound-effects/dripping-water-in-cave-114694/) | solarmusic |
-| Inside Old Train | [Link para o áudio original](https://pixabay.com/sound-effects/inside-old-train-169418/) | kokoreli777 |
-| Dripping Water in Cave | [Link para o áudio original]() | solarmusic |
-| Calm Zen River Flowing | [Link para o áudio original](https://pixabay.com/sound-effects/calm-zen-river-flowing-228223/) | Alex_Jauk |
+| Night Ambience | [Link to original audio](https://pixabay.com/sound-effects/night-ambience-with-cricket-sound-271304/) | TanwerAman |
+| Crackling Fire | [Link to original audio](https://pixabay.com/sound-effects/campfire-crackling-fireplace-sound-119594/) | SoundsForYou |
+| Sandy Beach | [Link to original audio](https://pixabay.com/sound-effects/sandy-beach-calm-waves-water-nature-sounds-8052/) | juliusH |
+| Rain Ambience | [Link to original audio](https://pixabay.com/sound-effects/calming-rain-257596/) | Liecio | 
+| Coffee Shop Ambience | [Link to original audio](https://pixabay.com/sound-effects/ambience-coffee-shop-4-17028/) | freesound_community |
+| Dripping Water in Cave | [Link to original audio](https://pixabay.com/sound-effects/dripping-water-in-cave-114694/) | solarmusic |
+| Inside Old Train | [Link to original audio](https://pixabay.com/sound-effects/inside-old-train-169418/) | kokoreli777 |
+| Dripping Water in Cave | [Link to original audio]() | solarmusic |
+| Calm Zen River Flowing | [Link to original audio](https://pixabay.com/sound-effects/calm-zen-river-flowing-228223/) | Alex_Jauk |
 
-## 🛠️ Instalação e Uso
+## 🛠️ Installation and Usage
 
 ```bash
-# Clone o repositório
+# Clone the repository
 git clone https://github.com/ythiago03/timerify.git
 
-# Entre na pasta do projeto
+# Enter the project folder
 cd timerify
 
-# Instale as dependências
+# Install dependencies
 npm install
 
-# Inicie o servidor de desenvolvimento
+# Start the development server
 npm run dev
 ```
 
-Acesse `http://localhost:3000` no seu navegador para ver a aplicação rodando.
+Access [http://localhost:3000](http://localhost:3000) in your browser to see the app running.
 
-## 🤝 Contribuindo
+## 🤝 Contributing
 
-Contribuições são sempre bem-vindas! Para contribuir:
+Contributions are always welcome! To contribute:
 
-1. Faça um fork do projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
-3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
-4. Faça push para a branch (`git push origin feature/AmazingFeature`)
-5. Abra um Pull Request
+1. Fork the project
+2. Create a branch for your feature (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'feat: Add some AmazingFeature'`)
+4. Push to your branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-## 📝 Licença
+## 📝 License
 
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE)
 
-## 📧 Contato
-
-Se você tiver alguma dúvida ou sugestão, por favor, abra uma issue no repositório ou entre em contato através das minhas redes sociais.
-
----
-
-<div align="center">
-  Desenvolvido com ❤️ para aumentar a produtividade de todos por Thiago Fidêncio.
+<div align="center" style=>
+ Developed with ❤️ to boost productivity for everyone by <a href="https://thiagof.com/" target="_ blank">Thiago Fidêncio.</a>
 </div>
