@@ -91,7 +91,10 @@ export const UserPreferencesProvider = ({
 	const getSavedProfiles = (): string[] => {
 		const profiles = Object.keys(localStorage);
 		const filteredProfiles = profiles.filter(
-			(profile) => profile !== "theme" && profile !== "ally-supports-cache",
+			(profile) =>
+				profile !== "theme" &&
+				profile !== "ally-supports-cache" &&
+				profile !== "currentTheme",
 		);
 		return filteredProfiles;
 	};
