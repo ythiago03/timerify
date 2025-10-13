@@ -27,13 +27,13 @@ export default function Home() {
 					<BackgroundWrapper>
 						<Header />
 
-						<main className="w-full md:w-1/2  2xl:w-11/12 mx-auto grid grid-cols-1 2xl:grid-cols-3 gap-8 px-6 md:px-0 2xl:px-20">
+						<main className="w-full md:w-1/2  xl:w-full 2xl:w-11/12 mx-auto grid grid-cols-1 xl:grid-cols-3 gap-8 px-6 md:px-0 lg:px-2 xl:px-6 2xl:px-14">
 							<Tasks />
 							<Timer />
 							<AudioControl />
 						</main>
 
-						<footer className="mt-12 mb-6 pt-8 border-t border-foreground/20">
+						<footer className="mt-12 mb-6 pt-8 px-4 border-t border-foreground/20">
 							<div className="mx-auto max-w-7xl text-center">
 								<p className="text-sm text-muted-foreground mb-3">
 									Built with React.js, Tailwind CSS and Shadcn by{" "}
