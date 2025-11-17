@@ -51,7 +51,7 @@ Timerify is a pomodoro web application designed to increase your productivity du
 
 ![YouTube Integration Demo](./public/gifs/youtube-demo.gif)
 
-- Add any YouTube video or playlist
+- Add any YouTube video or playlist *(I personaly recomend [this playlist](https://youtu.be/2lCNYNyC54o?si=2FliuMiVpxsHkNq1) )*
 - Perfect for lo-fi music, study playlists, or ambient sounds
 - Independent volume control
 - Continue listening even when minimizing the window
@@ -140,3 +140,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE)
 <div align="center" style=>
  Developed with ❤️ to boost productivity for everyone by <a href="https://thiagof.com/" target="_ blank">Thiago Fidêncio.</a>
 </div>
+
